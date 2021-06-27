@@ -65,6 +65,9 @@ namespace AssetsManagment.Controllers
 
 
 
+
+
+
                 gcnMain.Open();
 
                 SqlCommand cmd = new SqlCommand(strSQL, gcnMain);

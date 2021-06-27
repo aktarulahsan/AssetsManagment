@@ -20,6 +20,8 @@ namespace AssetsManagment.Controllers
             return View();
         }
 
+
+
         // GET: Product/Create
         public ActionResult Create()
         {
