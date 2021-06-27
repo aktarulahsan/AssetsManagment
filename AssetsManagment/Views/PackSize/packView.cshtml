@@ -175,17 +175,22 @@
                      name: 'CategoryName',
                  },
 
-                   {
-                       render: function (data, type, row) {
-                           return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
-                       }
-                   },
+                   //{
+                   //    render: function (data, type, row) {
+                   //        return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                   //    }
+                   //},
 
-                     {
-                         render: function (data, type, row) {
-                             return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
-                         }
-                     },
+                   //  {
+                   //      render: function (data, type, row) {
+                   //          return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
+                   //      }
+                   //  },
+                  {
+                      render: function (data, type, row) {
+                          return '<button class="btn btn-info fontsize  sales-sloat-ak">   <i class="fa fa-pencil"></i></button>' + "&nbsp" + '<button class="btn btn-danger fontsize  delete-sloat-ak"> <i class="fa fa-trash"></i></button>';
+                      }
+                  },
 
             ],
             "responsive": true,

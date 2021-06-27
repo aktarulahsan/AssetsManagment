@@ -1,6 +1,5 @@
 ﻿@model AssetsManagment.Models.StockGroup
-
-
+ 
  <div class="form-horizontal">
 
     <div>
@@ -36,7 +35,14 @@
                                     </div>
                                     <div class="form-group col-md-3 ">
                                         <label for="Name">Under</label>
-                                        <input type="text" class="form-control" id="Under" placeholder="Under" />
+                                        <select id="Under" class="form-control" aria-describedby="basic-addon2">
+                                            
+                                        </select>
+
+                                       
+
+
+                                        @*<input type="text" class="form-control" id="Under" placeholder="Under" />*@
                                     </div>
 
                                     @*<div class="form-group col-md-3 ">
@@ -237,6 +243,9 @@
 
 
 
+ 
+
+
     var selectdata = "";
 
     function saveOrUpdate() {
@@ -372,12 +381,42 @@
             table.row('.selected').remove().draw(false);
         });
 
+        getUnderList();
 
 
-
+ 
        
 
     });
+
+
+    function getUnderList() {
+
+        $.ajax({
+            url: '/StockGroup/getUnderList',
+            type: 'GET',
+            data: "{}",
+            success: function (data) {
+                console.log('hello delete dataddddddddd', data);
+                var s = '<option value="-1">Please Select a Under Group</option>';  
+                for (var i = 0; i < data.length; i++) {  
+                    s += '<option value="' + data[i].SERIAL + '">' + data[i].NAME + '</option>';
+                }  
+                $("#Under").html(s);
+            }  ,
+            //success: function (data) {
+
+            //    alert(data);
+            //    //$('#menu2').html(data);
+            //    //Spiner.hide();
+            //},
+            error: function (ex) {
+                //alert(ex);
+                //Spiner.hide();
+            }
+        });
+    }
+
 
     function showGrid() {
         $('#datatable').DataTable({
@@ -385,6 +424,7 @@
             "processing": true,
             "orderMulti": false, // for disable multiple column at once  
             "scrollX": true,
+
             "deferRender": true,
             "ajax": {
                 "url": "/StockGroup/GetLeaveEditkey",
@@ -399,16 +439,6 @@
                     return response.data;
                 }
             },
-
-            //"columnDefs": [{
-            //    orderable: false,
-            //    className: 'select-checkbox',
-            //    targets: 0
-            //}],
-            //"select": {
-            //    style: 'os',
-            //    selector: 'td:first-child'
-            //},
 
 
             "order": [[0, 'asc']],
@@ -450,24 +480,37 @@
                       }
                   },
 
+                  //{
+                  //    data: null,
+                  //    className: "dt-center editor-edit",
+                  //    defaultContent: '<i class="fa fa-pencil"/>',
+                  //    orderable: false
+                  //},
+                  //{
+                  //    data: null,
+                  //    className: "dt-center editor-delete",
+                  //    defaultContent: '<i class="fa fa-trash"/>',
+                  //    orderable: false
+                  //},
+
                    {
                        render: function (data, type, row) {
-                           return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                           return '<button class="btn btn-info fontsize  sales-sloat-ak">   <i class="fa fa-pencil"></i></button>' + "&nbsp" + '<button class="btn btn-danger fontsize  delete-sloat-ak"> <i class="fa fa-trash"></i></button>';
                        }
                    },
 
-                     {
-                         render: function (data, type, row) {
-                             return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
-                         }
-                     },
+                     //{
+                     //    render: function (data, type, row) {
+                     //        return '<button class="btnPrintAllResult gotoResultEntry btn btn-success"><i class="fa fa-trash"></i> </button>';
+                     //    }
+                     //},
 
 
 
             ],
 
 
-            "responsive": true,
+            "responsive": false,
             "select": true,
             "rowCallback": function (row, data) {
 
