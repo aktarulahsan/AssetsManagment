@@ -1,0 +1,210 @@
+﻿@*@using AssetsManagment.HtmlExtensions*@
+@{
+    ViewBag.Title = "test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ <div class="form-horizontal">
+
+    <div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#stockGroup" role="tab" aria-controls="home" aria-selected="true">Stock Group</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#menu1" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="stockGroup" class="tab-pane active">
+
+
+                <div class="col-md-10">
+                   <div >
+                       <div class="form-group">
+                           <form>
+                             <div class="row">
+                                 <div class="form-group col-md-3 ">
+                                     <label for="EmployeeId">Name</label>
+                                     <input type="text" class="form-control" id="StockGroupName" placeholder="Name" />
+                                 </div>
+                                 <div class="form-group col-md-3 ">
+                                     <label for="Name">Under</label>
+                                     <input type="text" class="form-control" id="Under" placeholder="Under" />
+                                 </div>
+
+                                 <div class="form-group col-md-3 ">
+                                     <label for="State">State</label>
+                                     <input type="text" class="form-control" id="State" name="State" placeholder="Status" />
+                                 </div>
+                                 <div class="form-group col-md-3 ">
+                                     <label for="EmployeeId">Status</label>
+                                     <select id="ddlCategory" class="form-control" aria-describedby="basic-addon2">
+                                         <option value="1">Yes</option>
+                                         <option value="0">No</option>
+                                     </select>
+                                     <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" data-toggle="modal" data-target="#myModal"></i></span>
+                                 </div>
+                             </div>
+
+                               @*<div class="form-group">
+                    <label for="Country">Country</label>
+                    <input type="text" class="form-control" id="Country" placeholder="Country" />
+                </div>*@
+                           </form>
+                       </div>
+                   </div>
+
+
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-primary" id="btnAdd" onclick="return saveStockGroup();" value="Add"></input>
+                        @*<button type="button" class="btn btn-primary" id="clear" onclick="return showdataTable();">gridview</button>
+                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return getSotckGrouplist();">Update New</button>*@
+                        @*<button type="button" class="btn btn-primary" id="btnAdd" onclick="return Calculetion();">Calculetion</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    </div>
+
+                </div>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+                <h3>Menu 1</h3>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <h3>Menu 2</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+            </div>
+            <div id="menu3" class="tab-pane fade">
+                <h3>Menu 3</h3>
+                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+        </div>
+
+    </div>
+
+   
+</div>
+
+
+<table id="examples" class="display" style="width:100%">
+  
+     
+</table>
+
+
+
+
+<script type="text/javascript">
+
+
+    var editor;
+
+    $(document).ready(function () {
+
+        $(".nav-tabs a").click(function () {
+            $(this).tab('show');
+        });
+
+        $('#button').click(function () {
+            table.row('.selected').remove().draw(false);
+        });
+
+
+
+
+        $('#examples').DataTable({
+            "ajax": {
+                "url": "/StockGroup/GetLeaveEditkey",
+                "type": "POST",
+                "datatype": "json",
+                "dataSrc": function (response) {
+                    // Settings.
+                    response.draw = response.data.draw;
+                    console.log('request.responseText', response.data);
+                    return response.data;
+                }
+            },
+            "order": [[0, 'asc']],
+            "columns": [
+                {
+                    title: 'SERIAL',
+                    data: 'SERIAL',
+                    name: 'SERIAL',
+                },
+
+                 {
+                     title: 'NAME',
+                     data: 'NAME',
+                     name: 'NAME',
+                 },
+                  {
+                      title: 'PARENT',
+                      data: 'PARENT',
+                      name: 'PARENT',
+                  },
+                   {
+                      render: function (data, type, row) {
+                          return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Delivered</button>';
+                       }
+                   },
+
+                 
+
+            ],
+
+
+            "responsive": true,
+            "select": true,
+            "rowCallback": function (row, data) {
+
+
+                //$(row)
+                //  .find('.booked-sloat')
+                //  .click(function () {
+                //      console.log('hello delete data', data);
+                //      //rerender();
+                //  });
+
+                $(row)
+                 .bind('click')
+                 .click(function () {
+
+                     selectdata = data;
+                     console.log('hello delete dataddddddddd', selectdata);
+                     //rerender();
+                 });
+                $(row).find(".sales-sloat-ak").click(function () {
+                    selectdata = data;
+                    edit(selectdata);
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+
+            }
+
+        });
+
+    });
+
+    function edit(selectdata) {
+        alert(selectdata.NAME)
+        $('#StockGroupName').val(selectdata.NAME);
+        $('#Under').val(selectdata.PARENT);
+        $('#State').val(selectdata.G_STATUS);
+        $('#ddlCategory').val(selectdata.G_STATUS);
+        $('#btnAdd').val("Update");
+        
+        
+  
+
+
+    }
+
+</script>

@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Asset Managment</title>
+
+
+    
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+     
+  
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">*@
+   
+    <link rel="stylesheet" type="text/css" href=" https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
+   
+    
+
+    @*<link rel=" stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/4.5.3/css/bootstrap.min.css">*@
+    @*<link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Content/navbar.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+    
+</head>
+
+
+
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading bg-default">Assets </div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="~/StockGroup/Index">Setting</a>
+                @*<a class="list-group-item list-group-item-action bg-light" href="~/Category/Index">Category</a>*@
+               
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="~/Distribute/Index">Distribute</a>
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Events</a>
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Profile</a>
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Status</a>
+            </div>
+        </div>
+        <!-- Page Content-->
+        <div id="page-content-wrapper">
+            @* <header class="headerTop">*@
+
+            @*<div id="vut-navbar">*@
+            @*class="navbar navbar-expand-lg navbar-light bg-light border-bottom"*@
+            <nav class="navbar   navbar-expand-lg bg-default">
+                <button class="btn btn-primary" id="menu-toggle"><i class="fa fa-align-justify"></i></button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+                @*<a href="" class="navbar-brand">
+                        <img src="assets/images/logo.png" alt="logo" class="img-fluid">
+                    </a>*@
+                @*<button type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav"
+                            aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+                        <span class="navbar-toggler-icon fa fa-bars"></span>
+                    </button>*@
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <!-- <li class="nav-item active"><a href="https://vivasales.pihr.xyz/dashboard" class="nav-link"><span
+                                class="icon icon-dashboard"></span>Dashboard
+                        </a></li> -->
+
+                        <li class="nav-item dropdown menu-large">
+                            <a data-toggle="dropdown"
+                               class="dropdown-toggle nav-link">
+                                <span class="icon fa fa fa-leaf"></span>
+                                Assets
+                            </a>
+                            <ul class="dropdown-menu megamenu">
+                                <li class="nav-item">
+                                    <a [routerLink]="['/leave']" data-toggle="" class="nav-link">
+                                        Dashboard
+                                    </a>
+                                    <!---->
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a data-toggle="dropdown" class="nav-link dropdown-toggle">
+                                        Operation
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a [routerLink]="['/leaveApplication']"
+                                           class="dropdown-item">
+                                            Leave Application
+                                        </a><a class="dropdown-item">
+                                            Visit Application
+                                        </a><a class="dropdown-item">
+                                            Leave Adjustment
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a data-toggle="dropdown" class="nav-link dropdown-toggle">
+                                        Report
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a href="#"
+                                           class="dropdown-item">
+                                            Employee Leave Balance
+                                        </a><a href="#"
+                                               class="dropdown-item">
+                                            Leave Summary
+                                        </a><a href="#"
+                                               class="dropdown-item">
+                                            Leave Analysis Report
+                                        </a><a href="#"
+                                               class="dropdown-item">
+                                            Visit Report
+                                        </a><a href="#"
+                                               class="dropdown-item">
+                                            Leave Adjustment Report
+                                        </a><a href="#"
+                                               class="dropdown-item">
+                                            Leave Approver History Report
+                                        </a><a href="#"
+                                               class="dropdown-item">
+                                            Employee Earn Leave
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="https://vivasales.pihr.xyz/dashboard#"
+                                       data-toggle="dropdown" class="nav-link dropdown-toggle">
+                                        Settings
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a href="https://vivasales.pihr.xyz/Leave/leavetype/Index"
+                                           class="dropdown-item">
+                                            Leave Type
+                                        </a><a href="https://vivasales.pihr.xyz/Leave/leavegroup/Index"
+                                               class="dropdown-item">
+                                            Leave Group
+                                        </a><a href="https://vivasales.pihr.xyz/Leave/currentleavestatus/Index"
+                                               class="dropdown-item">
+                                            Current Leave Status
+                                        </a><a href="https://vivasales.pihr.xyz/Leave/leaveyear/Index"
+                                               class="dropdown-item">
+                                            Leave Year
+                                        </a><a href="https://vivasales.pihr.xyz/Leave/leaveprocesspolicy/Index"
+                                               class="dropdown-item">
+                                            Leave Process Policy
+                                        </a><a href="https://vivasales.pihr.xyz/Leave/approversetup/Index"
+                                               class="dropdown-item">
+                                            Approver Setup
+                                        </a><a href="https://vivasales.pihr.xyz/Leave/leaveeligibleemployee/Index"
+                                               class="dropdown-item">
+                                            Eligible Employee
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <ul class="navbar-nav ml-auto align-items-center">
+                        <li class="nav-item dropdown">
+                            <a href="javascript:;" data-toggle="dropdown"
+                               class="nav-link dropdown-toggle">
+                                <span class="username">
+                                    {{empCardNo}}
+                                    [<span>Admin</span>]
+                                </span> <span class="icon icon-user mr-1"></span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="https://vivasales.pihr.xyz/Login/ChangePassword"
+                                   class="dropdown-item">
+                                    <i class="icon fa fa-lock"></i>Change Password
+                                </a> <a (click)="logout()" class="dropdown-item">
+                                    <i class="icon fa fa-key"></i>Log Out
+                                </a>
+                            </div>
+                        </li>
+                        <li id="header_notification_bar" class="nav-item dropdown">
+                            <a href="javascript:;"
+                               data-toggle="dropdown" data-close-others="false" title="Notification"
+                               class="dropdown-toggle nav-link">
+                                <span class="icon icon-bell">
+                                    <span id="notificationNumber"
+                                          class="d-none notify-badge bg-warning">0</span>
+                                </span>
+                            </a>
+                            <div id="notifications-dropdown" class="dropdown-menu dropdown-menu-right scrollable-table">
+                                <h6 class="dropdown-header">Notifications</h6>
+                                <div class="dropdown-divider"></div> <a href="javascript:;" class="dropdown-item">
+                                    No
+                                    notifications available.
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+
+            <div class="container-fluid">
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<script src="~/Scripts/popper.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>*@
+    @*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>*@
+   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script> 
+    <script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    @*<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>*@
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    @*<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js"></script>*@
+   
+    
+    
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    @*<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>*@
+    @*<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <!-- Core theme JS-->
+    <script src="~/Scripts/scripts.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

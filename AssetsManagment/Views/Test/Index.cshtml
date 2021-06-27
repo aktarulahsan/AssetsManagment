@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    @*<div class="row">
+        <div class="col-md-2">
+            <div class="form-group hidden">
+                <label class="control-label">LeaveKey:</label><input id="key" readonly type="text" value="@Model.EmployeeModel.EMP_LEAVE_KEY" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">ID:</label><input id="ID" type="text" value="@Model.EmployeeModel.EMP_CARD_NO" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Name:</label><input id="empName" type="text" value="@Model.EmployeeModel.EMP_NAME" readonly class="form-control" />
+            </div>
+
+          
+ 
+    </div>
+</div>*@
+    </div>
+<div class="row">
+    <div class="btn-group-sm col-md-8 col-md-offset-4 common-button">
+        <input type="button" id="IDLeaveApproveHOD" class="btn btn-primary btn-sm btnHODApprove" value="Approved" />
+        <input type="button" id="btnnotapprove" class="btn btn-primary btn-sm btnHODNotApproved" value="Not Approved" />
+    </div>
+
+</div>
+
+<h2>This is a heading</h2>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>Click me</button>
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("p").hide();
+        });
+    });
+</script>
+@*<script>
+
+
+    $(".btnHODNotApproved").on("click", function () {
+
+        alert(" ok");
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/LeaveApplication/ApproveLeave",
+        //    data: JSON.stringify(leaveList),
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+        //    success: function (r) {
+        //        alert(r + " record(s) inserted.");
+        //    }
+        //});
+
+
+    });
+
+
+</script>*@

@@ -1,0 +1,520 @@
+﻿@model AssetsManagment.Models.Category
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+      
+        
+        <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#stockGroup" role="tab" aria-controls="home" aria-selected="true">Stock Group</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="stockGroup" class="tab-pane active">
+
+
+                    <div class="col-md-10">
+                        <div class="row">
+                            <form>
+                                <div class="form-group col-md-3 ">
+                                    <label for="EmployeeId">Name</label>
+                                    <input type="text" class="form-control" id="StockGroupName" placeholder="Name" />
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label for="Name">Under</label>
+                                    <input type="text" class="form-control" id="Under" placeholder="Under" />
+                                </div>
+
+                                <div class="form-group col-md-3 ">
+                                    <label for="State">State</label>
+                                    <input type="text" class="form-control" id="State" name="State" placeholder="Status" />
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label for="EmployeeId">Status</label>
+                                    <select id="ddlCategory" class="form-control" aria-describedby="basic-addon2">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" data-toggle="modal" data-target="#myModal"></i></span>
+                                </div>
+
+                                @*<div class="form-group">
+                            <label for="Country">Country</label>
+                            <input type="text" class="form-control" id="Country" placeholder="Country" />
+                        </div>*@
+                            </form>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btnAdd" onclick="return saveStockGroup();">Add</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd" onclick="return showdataTable();">gridview</button>
+                            <button type="button" class="btn btn-primary" id="btnAdd" onclick="return getSotckGrouplist();">Update New</button>
+                            @*<button type="button" class="btn btn-primary" id="btnAdd" onclick="return Calculetion();">Calculetion</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">Stock Item</div>
+                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">Measurement</div>
+                <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">Unit</div>
+                <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
+            </div>
+        </div>
+        
+       
+
+
+    </div>
+}
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+
+<div class="table-responsive">
+    <table id="example" class="table table-striped table-bordered" style="width:100%"
+           dttrigger="dtTrigger"
+           ></table>
+</div>
+
+
+<script>
+
+    $('#myTab a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
+    var selectdata;
+
+
+    $(document).ready(function () {
+        //showGrid();
+        showdataTable();
+        //getSotckGrouplist();
+        //loadData();
+    });
+
+
+
+    function showGrid() {
+
+        $("#demoGrid").DataTable({
+
+            "processing": true, // for show progress bar  
+            "serverSide": true, // for process server side  
+            "filter": true, // this is for disable filter (search box)  
+            "orderMulti": false, // for disable multiple column at once  
+            "pageLength": 5,
+
+            "ajax": {
+                "url": "/StockGroup/GetLeaveEditkeys",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            //"columnDefs":
+            //[{
+            //    "targets": [0],
+            //    "visible": false,
+            //    "searchable": false
+            //},
+            //{
+            //    "targets": [7],
+            //    "searchable": false,
+            //    "orderable": false
+            //},
+            //{
+            //    "targets": [8],
+            //    "searchable": false,
+            //    "orderable": false
+            //},
+            //{
+            //    "targets": [9],
+            //    "searchable": false,
+            //    "orderable": false
+            //}],
+
+            "columns": [
+
+
+                 {
+                     title: 'NAME',
+                     data: 'NAME',
+                     name: 'NAME',
+                 },
+
+                  //{
+                  //    title: 'catId',
+                  //    data: 'catId',
+                  //    name: 'catId',
+                  //},
+                  // {
+                  //     title: 'catId',
+                  //     data: 'catId',
+                  //     name: 'catId',
+                  // },
+
+                 
+
+
+                  //{ "data": "NAME", "name": "NAME", "autoWidth": true },
+                  //{ "data": "CompanyName", "name": "CompanyName", "autoWidth": true },
+                  //{ "data": "ContactName", "title": "ContactName", "name": "ContactName", "autoWidth": true },
+                  //{ "data": "ContactTitle", "name": "ContactTitle", "autoWidth": true },
+                  //{ "data": "City", "name": "City", "autoWidth": true },
+                  //{ "data": "PostalCode", "name": "PostalCode", "autoWidth": true },
+                  //{ "data": "Country", "name": "Country", "autoWidth": true },
+                  //{ "data": "Phone", "name": "Phone", "title": "Status", "autoWidth": true },
+
+                  //{
+                  //    data: null, render: function (data, type, row) {
+                  //        return "<a href='#' class='btn btn-danger' onclick=edit('" + data.NAME + "'); >Delete</a>";
+                  //    }
+                  //},
+
+
+
+                  //{
+                  //    "render": function (data, type, full, meta)
+                  //    { return '<a class="btn btn-info" href="/Demo/Edit/' + full.NAME + '">Edit</a>'; }
+                  //     //{ return '<a class="btn btn-info" onclick=edit()' + full.NAME + '">Edit</a>'; }
+                  //},
+                  // {
+                  //     data: null, render: function (data, type, row) {
+                  //         return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.NAME + "'); >Delete</a>";
+                  //     }
+                  // },
+
+            ]
+
+        });
+    }
+
+    function edit(data) {
+
+
+        alert('hello delete data', selectdata)
+
+
+    }
+
+   
+
+    function showdataTable() {
+
+        //alert("ok")
+        var selectData;
+
+        $("#example").DataTable({
+
+            "columnDefs": [
+                                { "searchable": true, "orderable": true, targets: "_all" },
+                                { "className": "text-center custom-middle-align", targets: "_all" }
+            ],
+
+            "processing": true, // for show progress bar  
+            "serverSide": true, // for process server side  
+            //"filter": true, // this is for disable filter (search box)  
+            "orderMulti": false, // for disable multiple column at once  
+            "pageLength": 5,
+            "deferRender": true,
+
+            "ajax": {
+                "url": "/StockGroup/GetLeaveEditkey",
+                "type": "POST",
+                "datatype": "json",
+                "dataSrc": function (response) {
+                    // Settings.  
+                    response.draw = response.data.draw;
+                    console.log('request.responseText', response.data);
+                    return response.data;
+                }
+            },
+            'columnDefs': [{
+                //'targets': 0,
+                //'searchable': false,
+                //'orderable': false,
+                //'width': '1%',
+                'className': 'dt-body-center',
+                'render': function (data, type, full, meta) {
+                    return '<input type="checkbox">';
+                }
+            }],
+            "order": [[0, 'asc']],
+            "columns": [
+                {
+                    title: 'SERIAL',
+                    data: 'SERIAL',
+                    name: 'SERIAL',
+                },
+
+                 {
+                     title: 'NAME',
+                     data: 'NAME',
+                     name: 'NAME',
+                 },
+                  {
+                      title: 'PARENT',
+                      data: 'PARENT',
+                      name: 'PARENT',
+                  },
+
+                 {
+                         data: null, render: function (data, type, row) {
+                             return "<a  class='btn btn-danger' onclick=edit('" + data.SERIAL + "'); >edit</a>";
+                         }
+                     },
+
+            ],
+
+            "responsive": true,
+            "select": true,
+            "rowCallback": function (row, data) {
+                if (data.grade == "A") {
+                    $('td:eq(4)', row).html('<b>A</b>');
+                }
+
+                $(row)
+                  .find('.booked-sloat')
+                  .click(function () {
+                      console.log('hello delete data', data);
+                      rerender();
+                  });
+
+                $(row)
+                 .bind('click')
+                 .click(function () {
+                    
+                     selectdata = data;
+                     console.log('hello delete dataddddddddd', selectdata);
+                     rerender();
+                 });
+
+
+               
+            }
+
+
+        });
+
+
+    }
+
+      
+    dtTrigger: new Subject();
+    var dtElement= DataTableDirective;
+
+    function rerender() {
+        console.log('hello delete render', selectdata);
+        //dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        //this.dtTrigger.next();
+
+
+       
+    }
+
+
+    function loadData() {
+
+        alert("4")
+
+
+        $.ajax({
+            url: "/StockGroup/GetLeaveEditkey",
+            type: 'GET',
+            //data: { StudentIdC: studentIdC },
+            dataType: 'html',
+            contentType: 'application/json',
+            success: function (data) {
+                alert(data)
+            },
+            error: function (ex) {
+                //alert(ex);
+                //Spiner.hide();
+            }
+        });
+
+    }
+
+    function saveStockGroup1() {
+        //loadData();
+
+        showdataTable();
+
+                    //getSotckGrouplist();
+                 
+
+    }
+
+    function saveStockGroup() {
+        //alert("ok")
+        //var res = validate();
+        //if (res == false) {
+        //    return false;
+        //} ddlCategory
+        var empObj = {
+            NAME: $('#StockGroupName').val(),
+            PARENT: $('#Under').val(),
+            G_STATUS: $('#ddlCategory').val(),
+            //USE_PACK_SIZE: $('#State').val(),
+            //G_STATUS: $('#Country').val()
+        };
+
+        $.ajax({
+            url: "/StockGroup/Create",
+            data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //alert(result)
+                //loadData();
+                //$('#myModal').modal('hide');
+                if (result == "Ok") {
+                 
+                    getSotckGrouplist();
+                    cleardatda();
+                    //alert("save data")
+                    //$('.nav-tabs a[href="#tabLeaveApplicationList"]').tab('show');
+             
+
+                };
+                //error: function (errormessage) {
+                //    alert(errormessage.responseText);
+                //}
+
+            }
+        });
+
+    }
+
+
+    //function getSotckGrouplist() {
+    //    $.ajax({
+
+    //        url: "/StockGroup/GetLeaveEditkeys",
+    //        type: 'GET',
+    //        contentType: "application/json;charset=utf-8",
+    //        dataType: 'json',
+    //        //cache: false,
+    //        success: function (response) {
+
+    //            $("#bidders").find("tr:gt(0)").remove();
+    
+    //            for (var i = 0; i < response.length ; i++) {
+    //                $('#bidders').append('<tr><td class="name"> ' + response[i]['NAME'] + '</td><td style="visibility:hidden;"></td><td><button class="btn btn-primary">CLICK HERE</button></td></tr>');
+    //            }
+
+
+    //        }
+    //    });
+    //}
+    function Calculetion() {
+        $.ajax({
+
+            url: "/StockGroup/GetLeaveEditkey",
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            //cache: false,
+            success: function (response) {
+
+                $("#bidders").find("tr:gt(0)").remove();
+
+                for (var i = 0; i < response.length ; i++) {
+                    $('#bidders').append('<tr><td class="name"> ' + response[i]['NAME'] + '</td><td>' + response[i]['NAME'] + '</td><td><button class="btn btn-primary">CLICK HERE</button></td></tr>');
+                }
+
+
+            }
+        });
+    }
+
+    function cleardatda() {
+        //alert(result.LEAVE_ID) 
+        //$('#key').val(result.EMP_LEAVE_KEY);
+        $('#ddlCategory').val("");
+        $('#LeaveEntryModel_LeaveName').val("");
+        $('#LeaveEntryModel_StartDate').val("");
+        $('#LeaveEntryModel_EndDate').val("");
+        $('#LeaveEntryModel_NoOfDays').val("");
+        $('#LeaveEntryModel_CauseOfLeave').val("");
+        $('#LeaveEntryModel_CardNo').val("");
+        $('#LeaveEntryModel_EmpName').val("");
+        $('#LeaveEntryModel_MobileNo').val("");
+        $('.searchable-dropdown').val(''); // Select the option with a value of '1'
+        $('.searchable-dropdown').trigger('change'); // Notify any JS components that the value changed
+    }
+    //$(document).ready(function () {
+        //$("button").click(function () {
+        //    $("p").hide();
+        //    alert("ok")
+        //});
+
+        //$(document).ready(function () {
+        //    $("button").click(function () {
+        //        $("p").hide();
+        //    });
+        //});
+    //});
+    //var rowIdx = 0;
+    //function UpdateLeave() {
+
+    //    /*  add korle database e save korben? na */
+
+    //    /* table ta koi? kort*/
+
+    //    var name = $("#cat_id").val();
+    //    var email = $("#cat_name").val();
+    //    var status = $("#cat_status").val();
+       //alert("ok")
+    //    var name = "Test";
+    //    var markup = "<tr>" +
+    //        "<td hidden>" + (++rowIdx) + "</td>" +
+    //        "<td class='date' >" + email.value + "</td>" +
+    //        "<td><input type='text' class='from' width='50' /> </td>" +
+    //        "<td><input type='text'  class='to' />" +
+    //        "</td><td><input type='text'  class='workwith' /></td>" +
+    //        "</td><td><input type='text' class='remarks' /></td>" +
+    //        " <td>  <button type='button' class='btn btn-danger remove'>Remove</button> </td>" +
+    //        " </tr>";
+    //   /* alert(markup)*/
+    //    $("#tourTable tbody").append(markup);
+
+    //}
+
+
+
+  
+    
+</script>

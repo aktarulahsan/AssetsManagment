@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<div class="row" >
+    <div class="col-lg-4">
+        <h1>input field</h1>
+        <div class="row">
+            <div class="col-sm-4" style="margin: 5px;">
+                <h5 style="text-align: right;">Department</h5>
+            </div>
+            <div class="col-sm-7 " style="margin: 5px;">
+                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <label class="control-label col-md-4" style="margin: 5px;">Leave Category Drop</label>
+            <div class="col-md-7" style="margin: 5px;">
+                <div class="input-group">
+                    <select id="ddlCategory" class="form-control" aria-describedby="basic-addon2">
+                        <option value="">--Select One--</option>
+                        @*@foreach (var item in ViewBag.GetLeaveIdlist)
+                    {
+                        <option value="@item.LEAVE_ID">@item.LEAVE_ID</option>
+                    }*@
+                    </select>
+                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" data-toggle="modal" data-target="#myModal"></i></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="row">
+            <div class="col-sm-4" style="margin: 5px;">
+                <h5 style="text-align: right;">Card No</h5>
+            </div>
+            <div class="col-sm-7 " style="margin: 5px;">
+                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4" style="margin: 5px;">
+                <h5 style="text-align: right;">Item Name</h5>
+            </div>
+            <div class="col-sm-7 " style="margin: 5px;">
+                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="col-lg-8">
+        <h1>Grid view</h1>
+
+
+
+    </div>
+
+
+</div>
+
+<script>
+
+    GetLeaveIdlist = ["s", "a"];
+
+
+</script>

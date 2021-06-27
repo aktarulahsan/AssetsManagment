@@ -1,0 +1,188 @@
+﻿<div class="row">
+ 
+    <div class="col-md-10">
+
+
+        <div class="row">
+            <div class="col-sm-3" style="margin: 5px;">
+                <h5 style="text-align: right;">Department Name</h5>
+            </div>
+            <div class="col-sm-4 " style="margin: 5px;">
+                <input type="text" class="form-control" id="departmentName" placeholder="Name" />
+
+            </div>
+
+        </div>
+        <div class="modal-footer justify-content-center">
+            <span><input type="button" class="btn btn-outline-success " id="btnDpAdd" onclick="return saveOrUpdates();" value="Add"></input></span>
+
+            @*<button type="submit" class="btn btn-outline-success " onclick="saveData()">Submit</button>*@
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="bsModalRef.hide()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+    <div class="col-md-12" id="rcorners2">
+        <table id="datatableDepartment" class="table table-striped table-bordered" style="width:100%"></table>
+    </div>
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        showGrid();
+    });
+
+    function saveOrUpdates() {
+        var btn = $('#btnDpAdd').val()
+        if (btn == "Add") {
+            saveData();
+
+        } else {
+
+            console.log('request.responseText', selectdata);
+            UpdateData();
+        }
+    }
+
+    function saveData() {
+       
+        var empObj = {
+            department_name: $('#departmentName').val(),
+        };
+
+        $.ajax({
+            url: "/Department/create",
+            type: "POST",
+            data: JSON.stringify(empObj),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result == "Ok") {
+                    cleardatda();
+                    showGrid();
+                };
+
+            }
+        });
+    }
+
+
+    function cleardatda() {
+        $("#datatableDepartment").dataTable().fnDestroy();
+        $('#btnDpAdd').val("Add");
+
+        $('#departmentName').val("");
+       
+    }
+
+
+    function edit(selectdata) {
+
+        $('#departmentName').val(selectdata.department_name);
+
+        $('#btnDpAdd').val("Update");
+
+    }
+
+
+
+    function showGrid() {
+        $('#datatableDepartment').DataTable({
+            "bDestroy": true,
+            
+            "scrollX": true,
+            "ajax": {
+                "url": "/Department/showGrid",
+                "type": "POST",
+                "datatype": "json",
+                "dataSrc": function (response) {
+                    response.draw = response.draw;
+                    response.recordsTotal = response.recordsTotal;
+                    response.recordsFiltered = response.recordsFiltered;
+                    console.log('request.responseText', response);
+                    return response;
+                }
+            },
+
+            "select": true,
+
+            "order": [[1, 'asc']],
+            "columns": [
+                  {
+                      title: 'SL',
+                      render: function (
+                          data,
+                          type,
+                          row,
+                         meta
+                      ) {
+                          return '<span>' + (meta.row + 1) + '</span>';
+                      },
+                  },
+                //{
+                //    return type == 'export' ? meta.row + 1 : data
+                //},
+
+                 {
+                     title: 'department_name',
+                     data: 'department_name',
+                     name: 'department_name',
+                 },
+                 {
+                     title: 'department_code',
+                     data: 'department_code',
+                     name: 'department_code',
+                 },
+                 {
+                     title: 'dep_status',
+                     data: 'dep_status',
+                     name: 'dep_status',
+                 },
+                 
+
+                   {
+                       render: function (data, type, row) {
+                           return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                       }
+                   },
+
+                     //{
+                     //    render: function (data, type, row) {
+                     //        return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
+                     //    }
+                     //},
+
+            ],
+            "scrollX": true,
+            "responsive": true,
+            "rowCallback": function (row, data) {
+              
+                $(row).find(".sales-sloat-ak").click(function () {
+                    selectdata = data;
+                    console.log('hello edit dddeeeee', selectdata);
+                    edit(selectdata);
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+                $(row).find(".delete-sloat-ak").click(function () {
+                    selectdata = data;
+                    //deletePack(selectdata.lngslNo)
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+
+            }
+
+        });
+    }
+
+
+
+</script>

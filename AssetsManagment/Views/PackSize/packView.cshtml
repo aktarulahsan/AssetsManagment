@@ -1,0 +1,287 @@
+﻿@model AssetsManagment.Models.Category
+
+<div>
+    <div class="form-group">
+        <form>
+            <div class="row">
+                <div class="form-group col-md-3 ">
+                    <label for="EmployeeId">Name</label>
+                    <input type="text" class="form-control" id="ItemPacksize" placeholder="Name" />
+                </div>
+              
+            </div>
+
+           
+            <div class="modal-footer justify-content-center">
+
+                <span><input type="button" class="btn btn-primary" id="btnpAdds" onclick="return saveOrUpdates();" value="Save"></input></span>
+                <span><input type="button" class="btn btn-primary" id="btnAdds" onclick="return cleardatda();" value="Clear"></input></span>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+ 
+
+<div>
+    <table id="datatable2" class="table table-striped table-bordered" style="width:100%"></table>
+</div>
+
+<script>
+
+    var selectdata = "";
+
+    $(document).ready(function () {
+        showGrid();
+       
+        //$(".nav-tabs a").click(function () {
+        //    $(this).tab('show');
+        //});
+
+        //$('#button').click(function () {
+        //    table.row('.selected').remove().draw(false);
+        //});
+
+
+
+
+
+
+    });
+
+
+    function saveOrUpdates()
+    {
+        var btn = $('#btnpAdds').val()
+        if (btn == "Save") {
+            saveData();
+
+        } else {
+           
+            console.log('request.responseText', selectdata);
+            UpdateData();
+        }
+
+    }
+
+    function saveData() {
+        $.ajax({
+            url: "/PackSize/create?vstrName=" + $('#ItemPacksize').val(),
+            //data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result == "Ok") {
+                    cleardatda();
+                    showGrid();
+                };
+
+            }
+        });
+    }
+
+    function UpdateData() {
+
+        //alert(selectdata);
+        var empObj = {
+
+            CategoryName: $('#ItemPacksize').val(),
+            lngslNo: selectdata.lngslNo,
+            //PARENT: $('#Under').val(),
+            //G_STATUS: $('#gStatus').val(),
+            //SERIAL: selectdata.SERIAL,
+
+
+        };
+       
+
+        $.ajax({
+            
+            //url: "/PackSize/upDateData",
+            //data: JSON.stringify(empObj),
+            //type: "POST",
+            //contentType: "application/json;charset=utf-8",
+            //dataType: "json",
+            url: "/PackSize/upDateData",
+            data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result == "Ok") {
+                    cleardatda();
+                    showGrid();
+                };
+            }
+        });
+    }
+
+
+    function showGrid() {
+        $('#datatable2').DataTable({
+            "bDestroy": true,
+            
+            "scrollX": true,
+            "ajax": {
+                "url": "/PackSize/showGrid",
+                //"url": "/StockGroup/GetLeaveEditkey",
+                "type": "POST",
+                "datatype": "json",
+
+                "dataSrc": function (response) {
+
+                    response.draw = response.data.draw;
+                    response.recordsTotal = response.recordsTotal;
+                    response.recordsFiltered = response.recordsFiltered;
+                    console.log('request.responseText', response.data);
+                    return response.data;
+                }
+            },
+            //"select":true,
+            //"select": {
+            //    style: 'multi',
+            //    //selector: 'td:first-child'
+            //},
+            "select": true,
+
+            "order": [[1, 'asc']],
+            "columns": [
+
+                 //{
+                 //    title: 'Select',
+                 //    data: null,
+                 //    defaultContent: '',
+                 //    className: 'select-checkbox',
+                 //    orderable: false
+                 //},
+
+                 //{
+                    
+                 //    data: null,
+                 //    render: function ( data, type, row ) {
+                 //        if ( type === 'display' ) {
+                 //            return '<input type="checkbox" class="editor-active">';
+                 //        }
+                 //        return data;
+                 //    },
+                 //    className: "dt-body-center"
+                 //},
+                 {
+                     title: 'CategoryName',
+                     data: 'CategoryName',
+                     name: 'CategoryName',
+                 },
+
+                   {
+                       render: function (data, type, row) {
+                           return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                       }
+                   },
+
+                     {
+                         render: function (data, type, row) {
+                             return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
+                         }
+                     },
+
+            ],
+            "responsive": true,
+
+
+            //"buttons": [
+            //{ extend: "create", editor: editor },
+            //{ extend: "edit", editor: editor },
+            //{ extend: "remove", editor: editor }
+            //],
+
+
+           
+            "rowCallback": function (row, data) {
+                //$(row)
+                // .bind('click')
+                // .click(function () {
+
+                //     selectdata = data;
+                //     console.log('hello delete dataddddddddd', selectdata);
+                //     //rerender();
+                // });
+                $(row).find(".sales-sloat-ak").click(function () {
+                    selectdata = data;
+                    console.log('hello edit dddeeeee', selectdata);
+                    edit(selectdata);
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+                $(row).find(".delete-sloat-ak").click(function () {
+                    selectdata = data;
+                    deletePack(selectdata.lngslNo)
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+
+            }
+
+        });
+    }
+
+
+   
+
+    function edit(selectdata) {
+
+
+     
+        $('#ItemPacksize').val(selectdata.CategoryName);
+      
+        $('#btnpAdds').val("Update");
+
+    }
+
+    function deletePack(id) {
+    
+        $.ajax({
+            url: "/StockGroup/DeleteG?id=" + id,
+            //data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                alert(result)
+                //loadData();
+                //$('#myModal').modal('hide');
+                if (result == "OK") {
+
+                    cleardatda();
+                    showGrid();
+
+                    //alert("save data")
+                    //$('.nav-tabs a[href="#tabLeaveApplicationList"]').tab('show');
+
+
+                };
+                //error: function (errormessage) {
+                //    alert(errormessage.responseText);
+                //}
+
+            }
+        });
+
+
+    }
+
+    function cleardatda() {
+
+        $("#datatable2").dataTable().fnDestroy();
+        $('#btnpAdds').val("Save");
+  
+        $('#ItemPacksize').val("");
+   
+       
+       
+    }
+
+
+</script>

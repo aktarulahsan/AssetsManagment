@@ -1,0 +1,1068 @@
+﻿@model AssetsManagment.Models.StockItem
+
+   
+
+<br />
+<div><button type="button" class="btn btn-primary" data-toggle="modal" id="myBtn" data-target=".bd-example-modal-lg">Add Item</button></div>
+ 
+
+@*// modal start*@ 
+
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" data-backdrop="static"  aria-labelledby="myLargeModalLabel exampleModalCenterTitle" aria-hidden="true" id="myModal">
+
+            <div class="modal-dialog modal-lg bd-example-modal-lg ">
+                <div class="modal-content">
+                    <div class="modal-header ">
+
+                        <h5 class="modal-title  text-center" style="margin: 0 auto;" id="exampleModalLabel"></h5>
+                        <p>  </p>
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                (click)="bsModalRef.hide()">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body crudForm">
+                        <div class="persoanlInfoArea">
+                            <div class="row">
+
+                                <div class="col-md-8">
+
+                                    <div class="row" style="display: none;">
+                                        <div class="col-sm-4" style="margin: 5px;">
+                                            <h5 style="text-align: right;">Order Date</h5>
+                                        </div>
+                                        <div class="col-sm-7 " style="margin: 5px;">
+                                            <input style="font-size: large; font-weight: bold;"
+                                                   type="text"
+                                                   id="strDate"
+                                                   value=""
+                                                   class="form-control"
+                                                   readonly />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4" style="margin: 5px;">
+                                            <h5 style="text-align: right;">Item Name</h5>
+                                        </div>
+                                        <div class="col-sm-7 " style="margin: 5px;">
+                                            <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4" style="margin: 5px;">
+                                            <h5 style="text-align: right;">Item Description</h5>
+                                        </div>
+
+                                        <div class="col-sm-7 " style="margin: 5px;">
+
+                                            <textarea type="text"
+                                                      id="strItemDescription"
+                                                      placeholder="Type Item Description in Here"
+                                                      class="md-textarea md-textarea-auto form-control"
+                                                      name="strItemDescription"></textarea>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4" style="margin: 5px;">
+                                            <h5 style="text-align: right;">Under</h5>
+                                        </div>
+                                        <div class="col-sm-7 " style="margin: 5px;">
+
+                                            <div>
+                                                <select id="groupList" class="form-control">
+                                                    <option value="">--Select One--</option>
+                                                    @foreach (var group in ViewBag.groupList)
+                                                    {
+                                                        <option value="@group.NAME">@group.NAME</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4" style="margin: 5px; ">
+                                            <h5 style="text-align: right;">Unit</h5>
+                                        </div>
+                                        <div class="col-sm-7 " style="margin: 5px;">
+                                            <input type="text" class="form-control" id="strUnit" placeholder="Unit" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4" style="margin: 5px; ">
+                                            <h5 style="text-align: right;">Inactive</h5>
+                                        </div>
+                                        <div class="form-group col-sm-6 ">
+
+                                            <select class="form-control"
+                                                    id="status"
+                                                    name="catId">
+                                                <option>
+                                                    yes
+                                                </option>
+                                                <option>
+                                                    No
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4" style="padding: 15px;">
+                                    <div style="background-color: wheat; padding: 10px;">
+                                        <h1 style="text-align: center; color: green;">Total Qty</h1>
+                                        <input style="font-size: 52px; font-weight: bold; color: red;text-align: center; background-color: white;"
+                                               type="text"
+                                               id="qtyTotal"
+                                               class="form-control"
+                                               readonly />
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+
+                            </div>
+
+
+                        </div>
+                        @*<span><input type="button" class="btn btn-primary" id="btnAdds" onclick="return getData();" value="Add"></input></span>*@
+
+                        <div class="modal-body crudForm">
+                            <div class="persoanlInfoArea">
+                                <form class="form-horizontal form-signin"
+                                      (ngsubmit)="f.form.valid && onSaveOrUpdate(f)"
+                                      #f="ngForm"
+                                      novalidate
+                                      action="index.html">
+
+                                    <div class="row">
+                                        <div class="col-sm-4 form-group">
+                                            <label class="control-label">Location Name</label>
+                                            <div>
+                                                <select id="responsid2" class="form-control">
+                                                    <option value="">--Select One--</option>
+                                                    @foreach (var item in ViewBag.reslist)
+                                                    {
+                                                        <option value="@item.strLocation">@item.strLocation</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group col-md-2 ">
+                                            <h5 for="productName">Quentity</h5>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   name="productName"
+                                                   onchange="calculateRate()"
+                                                   id="intQty" />
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <h5 for="qty">Rate</h5>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   name="intRate"
+                                                   onchange="calculateRate()"
+                                                   id="intRate" />
+
+                                        </div>
+
+                                        <div class="form-group col-md-2 ">
+                                            <h5 for="rate">Amount</h5>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   id="itemAmount" />
+
+                                        </div>
+                                        <div class="form-group col-md-2 ">
+                                            <h5 for="rate">Batch</h5>
+                                            <input type="number"
+                                                   class="form-control" />
+
+                                        </div>
+
+
+                                    </div>
+                                    <br>
+
+                                    <div class="form-group">
+                                        <span><input type="button" class="btn btn-primary" id="btnAddlocation" onclick="addOrEditLocation();" value="Add"></input></span>
+                                        <span><input type="button" class="btn btn-warning" id="btnClearlocation" onclick="cleardatda();" value="Clear"></input></span>
+                                        @*<button type="submit" class="btn btn-dark"><i class="fa fa-plus"></i> Add to List</button>*@
+
+                                    </div>
+                                    <br>
+
+                                </form>
+
+                                <div>
+                                    <table id="locationDatatable" class="table table-striped table-bordered" style="width:100%"></table>
+                                </div>
+
+                                @*<table class="table table-borderless">
+                                <thead class="thead-light">
+                                <th>SL</th>
+                                <th>Product Code</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                                <th>Action</th>
+
+                                </thead>
+                                <tbody>
+                                    <tr *ngif="orderDetailList.length==0" [class.text-danger]="!isValid && orderDetailList.length==0">
+                                        <td class="font-italic text-center" colspan="5">
+                                            No item selected for this order.
+                                        </td>
+                                    </tr>
+
+                                    <tr *ngfor="let item of orderDetailList;let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.l4Code}}</td>
+                                        <td>{{item.qty}}</td>
+                                        <td>{{item.rate}}</td>
+                                        <td>{{item.rate*item.qty}}</td>
+
+                                        <td>
+                                            <a class="btn btn-sm btn-info text-white" (click)="editData(item,this)"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-sm btn-danger text-white ml-1" (click)='deleteitem(i)'><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>*@
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-success " onclick="saveData()">Submit</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="bsModalRef.hide()">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+</div>
+
+
+
+
+       
+      
+
+            <div >
+                <table id="datatable4" class="table table-striped table-bordered" style="width:100%"></table>
+            </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script>
+            //$(".chosen").chosen();
+
+
+
+            var selectdata = "";
+            var title = "Add Stock Item";
+            var todaydate = new Date();
+            var locationList;
+            var viewList;
+            var selectGroup;
+            var selectLocation;
+            var itemRate=0;
+            var itemQty=0;
+            var itemAmount;
+            var gLocationList = [];
+            var qtyTotal = 0;
+            var dblOpnRates = 0;
+            var dblOpnValues = 0;
+            var oldItemNameCode = "";
+
+            var selectGroup;
+            var selectlocationItem;
+
+            //var modal = document.getElementById("myModal");
+          
+           
+           
+
+            document.getElementById("exampleModalLabel").innerHTML = title ;
+            document.getElementById("strDate").value = todaydate.toLocaleDateString("en-US");;
+     
+            function getData() {
+
+                var itemName = $('#ItemName').val();
+                var strItemGroup = $('#strItemGroup').val();
+                var strUnit = $('#strUnit').val();
+                var strItemDescription = $('#strItemDescription').val();
+                var strDate = $('#strDate').val();
+                var status = $('#status').val();
+
+                console.log(itemName, strItemGroup, strUnit, strItemDescription, strDate);
+            }
+
+
+            function calculateRate() {
+
+                itemRate = $('#intRate').val();
+                itemQty = $('#intQty').val();
+                itemAmount = itemRate * itemQty;
+                document.getElementById("itemAmount").innerHTML = itemAmount;
+                console.log(itemRate, itemQty, itemAmount);
+
+            }
+
+            function addOrEditLocation() {
+                btn = $('#btnAddlocation').val();
+                if (btn == "Add") {
+                    addLocation();
+                } if (btn == "Update") {
+                    updateLocation();
+
+                }
+            }
+
+            function updateLocation() {
+                alert("UpdateLocation");
+                itemRate = $('#intRate').val();
+                itemQty = $('#intQty').val();
+                itemAmount = itemRate * itemQty;
+                var locationId = selectLocation;
+                console.log(gLocationList);
+                qtyTotal = parseInt(0);
+
+                for (i = 0; i < gLocationList.length; i++) {
+                    if (gLocationList[i].strBranchName == locationId) {
+                        gLocationList.splice(i, 1);
+                        gLocationList.push({
+                            intQty: itemQty,
+                            dblBranchRate: itemRate,
+                            dblBranchAmnout: itemAmount,
+                          
+                            strBranchName: locationId,
+
+                        });
+                        
+                    }
+                }
+                for (i = 0; i < gLocationList.length; i++) {
+                    qtyTotal += parseInt(gLocationList[i].intQty);
+                    dblOpnValues += parseInt(gLocationList[i].dblBranchAmnout);
+                }
+
+                dblOpnRates = dblOpnValues / qtyTotal;
+
+                cleardatda();
+                document.getElementById("qtyTotal").value = qtyTotal;
+                console.log("updateLocation",gLocationList);
+                showlocationlview();
+            }
+
+
+
+            function addLocation() {
+                selectLocation
+                
+                itemRate = $('#intRate').val();
+                itemQty = $('#intQty').val();
+                itemAmount = itemRate * itemQty;
+                console.log("updateLocation selectLocation", selectLocation);
+                var locationName = selectLocation;
+                var strLocation = selectLocation;
+                var result = false;
+                console.log("gLocationList gLocationList", gLocationList);
+                for (i = 0; i < gLocationList.length; i++) {
+                    if (gLocationList[i].strBranchName == locationName) {
+
+                        result = true;
+
+                    }
+                }
+                if (result === false) {
+                    console.log("result", result);
+                    gLocationList.push({
+                        intQty: itemQty,
+                        dblBranchRate: itemRate,
+                        dblBranchAmnout: itemAmount,
+                        //strLocation: locationName,
+                        strBranchName: locationName,
+                        //lngSlNo: locationId
+
+                    });
+                    cleardatda();
+                } else {
+                    alert("You Alrady Add This Location");
+                    return
+                }
+
+                console.log(gLocationList);
+                qtyTotal = parseInt(0);
+
+                for (i = 0; i < gLocationList.length; i++) {
+                    qtyTotal += parseInt(gLocationList[i].intQty);
+                    dblOpnValues += parseInt(gLocationList[i].dblBranchAmnout);
+                }
+
+                dblOpnRates = dblOpnValues / qtyTotal;
+                 
+                //for (i = 0; i < gLocationList.length; i++) {
+                //    qtyTotal += parseInt(gLocationList[i].intQty);
+                //    dblOpnRates += parseInt(gLocationList[i].dblBranchAmnout);
+                //}
+                console.log(qtyTotal);
+               
+
+                document.getElementById("qtyTotal").value = qtyTotal;
+
+                console.log(gLocationList);
+                showlocationlview();
+ 
+            }
+
+            function calculateData() {
+
+                for (i = 0; i < gLocationList.length; i++) {
+                    qtyTotal += parseInt(gLocationList[i].intQty);
+                  
+                }
+
+                document.getElementById("qtyTotal").value = qtyTotal;
+
+            }
+
+            function showlocationlview() {
+                $('#locationDatatable').DataTable({
+                    data: gLocationList,
+                    "bDestroy": true,
+                   
+                    "scrollX": true,
+                    "select": true,
+                    columns: [
+
+                        {
+                            title: 'SL',
+                            render: function (
+                                data,
+                                type,
+                                row,
+                               meta
+                            ) {
+                                return '<span>' + (meta.row + 1) + '</span>';
+                            },
+                        },
+
+                            //{ title: 'Location Name', data: 'strLocation' },
+                            { title: 'Location Name', data: 'strBranchName' },
+                            
+                            { title: 'Qty', data: 'intQty', className: 'editable' },
+                            { title: 'Rate', data: 'dblBranchRate', className: 'editable' },
+                            { title: 'Amount', data: 'dblBranchAmnout' },
+                             {
+                                 title: 'Edit',
+                                 render: function (data, type, row) {
+                                     return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                                 }
+                             },
+                            //{
+                            //    title: 'Qty',
+                            //    render: function (data, type, row) {
+                            //        return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
+                            //    }
+                            //},
+                    ],
+                    "scrollX": true,
+                    //"responsive": true,
+                    "rowCallback": function (row, data) {
+                        $(row)
+                         .bind('click')
+                         .click(function () {
+
+                             selectlocationItem = data;
+                             console.log('hello delete dataddddddddd', selectlocationItem);
+                             //rerender();
+                         });
+                        $(row).find(".sales-sloat-ak").click(function () {
+                            selectlocationItem = data;
+                            console.log('hello edit dddeeeee', selectlocationItem);
+                            editLocation(selectlocationItem);
+                            //that.salesss(data);
+                            //that.rerender();
+                        });
+                        $(row).find(".delete-sloat-ak").click(function () {
+                            selectlocationItem = data;
+                            //deletePack(selectdata.lngslNo)
+                            //that.salesss(data);
+                            //that.rerender();
+                        });
+
+                    }
+                });
+            }
+            //$('#locationDatatable').on('click', 'tbody td.editable', function (e) {
+            //    editor.inline(this);
+            //});
+
+         
+
+            function editLocation(selectdata) {
+                console.log('hello edit dddeeeee', selectdata);
+                //$('#responsid2').val(selectdata.strLocation);
+                //$('#responsid2').find(':selected').data(selectdata.strLocation);
+                //row.find('.responsid2').val(selectdata.strLocation).trigger("change");
+
+
+                $('#intRate').val(selectdata.dblBranchRate);
+                $('#intQty').val(selectdata.intQty);
+                document.getElementById("btnAddlocation").value = "Update";
+            }
+
+            function cleardatda() {
+
+
+
+
+                $("#datatable2").dataTable().fnDestroy();
+                $('#btnAddlocation').val("Add");
+
+                $('#intRate').val("");
+                $('#intRate').val("");
+                $('#intQty').val("");
+              
+
+
+
+
+            }
+
+
+
+
+
+
+
+            $(document).ready(function () {
+                showGrid();
+               
+                locationListShow();
+                viewList = '@(ViewBag.reslist)';
+                groupList = '@(ViewBag.groupList)';
+
+                console.log('viewList viewList params', viewList);
+
+
+                    $("#responsid2").select2({ "width": '100%' });
+                    $("#responsid2").focus();
+
+
+                    $("#responsid2").on("change", function () {
+                        selectLocation = $(this).val();
+
+                        //var strCardNo = $(this).val();
+                        console.log('params params params', selectLocation.lngSlNo, selectLocation);
+
+                        @*$.ajax({
+                            url: '@Url.Action("GetResponseDetails")',
+                            datatype: "json",
+                            data: {
+                                responseId: strCardNo
+                            },
+                            success: function (data) {
+                                if (data != null && data != "") {
+                                    $('#LeaveEntryModel_EmpName').val(data.EMP_NAME);
+                                    $('#LeaveEntryModel_MobileNo').val(data.EMP_ECONTRACT_MOBILE);
+                                }
+                                else {
+                                    $('#LeaveEntryModel_EmpName').val("");
+                                    $('#LeaveEntryModel_MobileNo').val("");
+
+                                }
+                            }
+                        })*@
+                    });
+
+
+                $("#groupList").select2({ "width": '100%' });
+                $("#groupList").focus();
+                $("#groupList").on("change", function () {
+                    selectGroup = $(this).val();
+
+                    //var strCardNo = $(this).val();
+                    console.log('params params params',  selectGroup);
+
+                        @*$.ajax({
+                            url: '@Url.Action("GetResponseDetails")',
+                            datatype: "json",
+                            data: {
+                                responseId: strCardNo
+                            },
+                            success: function (data) {
+                                if (data != null && data != "") {
+                                    $('#LeaveEntryModel_EmpName').val(data.EMP_NAME);
+                                    $('#LeaveEntryModel_MobileNo').val(data.EMP_ECONTRACT_MOBILE);
+                                }
+                                else {
+                                    $('#LeaveEntryModel_EmpName').val("");
+                                    $('#LeaveEntryModel_MobileNo').val("");
+
+                                }
+                            }
+                        })*@
+                        });
+
+
+                var glist =  '@(ViewBag.reslist)';
+                console.log('viewList viewList', glist);
+                $("#glist").select2({
+                    data: {
+                        data: glist.strLocation
+                    },
+                    //data: glist
+                })
+
+
+
+                $(".chose-country").select2({
+                   
+                    placeholder: "Location",
+                    theme: "classic",
+                
+
+
+                    ajax: {
+                        url: '/Location/LocationList',
+                        delay: 150,
+                        width: 'resolve',
+                        dataType: "json",
+                     
+
+                        "data": function (response) {
+                            response.draw = response.draw;
+                            response.recordsTotal = response.recordsTotal;
+                            response.recordsFiltered = response.recordsFiltered;
+                            console.log('request.data data data data responseText', response);
+                             
+                            return {
+                                //searchTerm: params.term
+                                results: response
+                            };
+                        },
+                        
+
+                        dataSrc: function (response) {
+                            response.draw = response.data.draw;
+                            response.recordsTotal = response.recordsTotal;
+                            response.recordsFiltered = response.recordsFiltered;
+                            console.log('request.data data data data responseText', response.data);
+                            return response.data;
+                        },
+                    
+
+                        processResults: function (response) {
+                        
+                            console.log('data data data', response);
+                            response.draw = response.draw;
+                            response.recordsTotal = response.recordsTotal;
+                            response.recordsFiltered = response.recordsFiltered;
+                            return {
+
+
+                                results: response
+                                
+                            };
+                        },
+                        minimumInputLength: 2,
+                        width: 'resolve',
+                       
+                    },
+                   
+                });
+            });
+          
+
+            function saveOrUpdates() {
+                var btn = $('#btnAdds').val()
+                if (btn == "Add") {
+                    saveData();
+
+                } else {
+
+                    console.log('request.responseText', selectdata);
+                    UpdateData();
+                }
+
+            }
+
+        
+            function saveData() {
+                
+                jQuery.ajaxSettings.traditional = true;
+                var list = [];
+                list = gLocationList;
+                console.log('list list', list);
+                var empObj = {
+                    //strItemName: $('#strItemName').val(),
+
+                    strItemName: $('#ItemName').val(),
+                    strItemGroup:selectGroup,
+                    strUnit: $('#strUnit').val(),
+                    strItemDescription: $('#strItemDescription').val(),
+                    strDate: $('#strDate').val(),
+                    strStatus: $('#status').val(),
+                    dblOpnQty: qtyTotal,
+                    dblOpnValue:dblOpnValues,
+                    dblOpnRate:dblOpnRates,
+                    gLocationList: list,
+
+
+
+                };
+                console.log("sdfsfsdfsdf", empObj);
+
+                $.ajax({
+                    url: "/Item/saveDatad",
+                    type: "POST",
+                    data: JSON.stringify(empObj),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                  
+                        if (result == "Ok") {
+                            $('#myModal').modal('hide');
+                            //cleardatda();
+                            //showGrid();
+                        } else {
+                            alert("resutl is ", result);
+                        };
+
+                    }
+                });
+            }
+
+
+            function UpdateData() {
+
+
+
+                var empObj = {
+
+
+                    strItemName: $('#ItemName').val(),
+                    strItemGroup: selectGroup,
+                    strUnit: $('#strUnit').val(),
+                    strItemDescription: $('#strItemDescription').val(),
+                    strDate: $('#strDate').val(),
+                    strStatus: $('#status').val(),
+                    dblOpnQty: qtyTotal,
+                    gLocationList: list,
+                    strIOldtemcode: oldItemNameCode,
+
+                };
+                $.ajax({
+                    url: "/Item/saveDatad",
+                    type: "POST",
+                    data: JSON.stringify(empObj),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+
+                        if (result == "Ok") {
+                            $('#myModal').modal('hide');
+                            //cleardatda();
+                            //showGrid();
+                        } else {
+                            alert("resutl is ", result);
+                        };
+
+                    }
+                });
+
+
+            }
+
+
+            function locationListShow() {
+               
+                $.ajax({
+
+                    url: "/Location/showGrid",
+                    //data: JSON.stringify(empObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                    
+                        if (result) {
+
+                            console.log('request.result.data', result.data);
+                            locationList = result.data;
+                          
+                        }
+                    
+                    }
+                });
+
+            }
+
+            function showGrid() {
+                $('#datatable4').DataTable({
+                    "bDestroy": true,
+                    
+                    "scrollX": true,
+                    "select": true,
+                    "ajax": {
+                        "url": "/Item/getStockItemList",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": function (response) {
+                            response.draw = response.data.draw;
+                            response.recordsTotal = response.recordsTotal;
+                            response.recordsFiltered = response.recordsFiltered;
+                            console.log('request.responseText', response.data);
+                            return response.data;
+                        }
+                    },
+
+                  
+
+                    "order": [[1, 'asc']],
+                    "columns": [
+                          {
+                              title: 'SL',
+                              render: function (
+                                  data,
+                                  type,
+                                  row,
+                                 meta
+                              ) {
+                                  return '<span>' + (meta.row + 1) + '</span>';
+                              },
+                          },
+                        //{
+                        //    return type == 'export' ? meta.row + 1 : data
+                        //},
+
+                         {
+                             title: 'ID',
+                             data: 'lngSlNo',
+                             name: 'lngSlNo',
+                         },
+                         {
+                             title: 'Item Name',
+                             data: 'strItemName',
+                             name: 'strItemName',
+                         },
+                         {
+                             title: 'Group',
+                             data: 'strItemGroup',
+                             name: 'strAstrItemGroupddres1',
+                         },
+                         {
+                             title: 'Opn-Qty',
+                             data: 'dblOpnQty',
+                             name: 'dblOpnQty',
+                         },
+
+                           {
+                               render: function (data, type, row) {
+                                   return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                               }
+                           },
+
+                             {
+                                 render: function (data, type, row) {
+                                     return '<button type="button"   class="btn btn-danger fontsize  delete-sloat-ak">Delete</button>';
+                                 }
+                             },
+
+                    ],
+                    "scrollX": true,
+                    "responsive": true,
+                    "rowCallback": function (row, data) {
+                        //$(row)
+                        // .bind('click')
+                        // .click(function () {
+
+                        //     selectdata = data;
+                        //     console.log('hello delete dataddddddddd', selectdata);
+                        //     //rerender();
+                        // });
+                        $(row).find(".sales-sloat-ak").click(function () {
+                            selectdata = data;
+                            console.log('hello edit dddeeeee', selectdata);
+                            edit(selectdata);
+                            //that.salesss(data);
+                            //that.rerender();
+                        });
+                        $(row).find(".delete-sloat-ak").click(function () {
+                            selectdata = data;
+                            deletePack(selectdata.lngslNo)
+                            //that.salesss(data);
+                            //that.rerender();
+                        });
+
+                    }
+
+                });
+            }
+
+
+
+
+            function edit(selectdata) {
+
+                
+                //strItemName: $('#ItemName').val(),
+                //strItemGroup:selectGroup,
+                //strUnit: $('#strUnit').val(),
+                //strItemDescription: $('#strItemDescription').val(),
+                //strDate: $('#strDate').val(),
+                //strStatus: $('#status').val(),
+                //dblOpnQty: qtyTotal,
+                //dblOpnValue:dblOpnValues,
+                //dblOpnRate:dblOpnRates,
+                //gLocationList: list,
+
+                //alert("ok");
+
+                $('#myModal').modal('show');
+
+                $('#ItemName').val(selectdata.strItemName);
+                oldItemNameCode = selectdata.strItemName;
+                $('#strUnit').val(selectdata.strItemGroup);
+                $('#strItemDescription').val(selectdata.strItemDescription);
+                //$('#strDate').val(selectdata.strPhone);
+                $('#status').val(selectdata.strStatus);
+                locationListByItemId(selectdata.strItemName);
+                
+                calculateRate();
+
+                $('#btnAdds').val("Update");
+
+            }
+
+
+            function locationListByItemId(id) {
+                
+
+                $.ajax({
+                    url: "/Item/locationListByItemId?id=" + id,
+                    //data: JSON.stringify(empObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        //alert("result ",result)
+                        gLocationList = result;
+
+                        if (gLocationList.length > 0) {
+
+                            showlocationlview();
+                            calculateData();
+                        }
+
+                        //loadData();
+                        //$('#myModal').modal('hide');
+                       // if (result == "OK") {
+
+                         //   cleardatda();
+                         //   showGrid();
+
+                            //alert("save data")
+                            //$('.nav-tabs a[href="#tabLeaveApplicationList"]').tab('show');
+
+
+                        //};
+                        //error: function (errormessage) {
+                        //    alert(errormessage.responseText);
+                        //}
+
+                    }
+                });
+
+            }
+
+            function deletePack(id) {
+
+                $.ajax({
+                    url: "/StockGroup/DeleteG?id=" + id,
+                    //data: JSON.stringify(empObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        alert(result)
+                        //loadData();
+                        //$('#myModal').modal('hide');
+                        if (result == "OK") {
+
+                            cleardatda();
+                            showGrid();
+
+                            //alert("save data")
+                            //$('.nav-tabs a[href="#tabLeaveApplicationList"]').tab('show');
+
+
+                        };
+                        //error: function (errormessage) {
+                        //    alert(errormessage.responseText);
+                        //}
+
+                    }
+                });
+
+
+            }
+
+           
+      
+     
+
+        </script>
