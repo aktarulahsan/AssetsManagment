@@ -475,49 +475,15 @@ namespace AssetsManagment.Controllers
                     cmdInsert.CommandText = strSQL;
                     cmdInsert.ExecuteNonQuery();
 
-
-                    //for (int i = 0; i < gLocationLists.length; i++)
-                    //{
-                        
-                    //}
                     if (gLocationLists.Count > 0) {
 
                         foreach (var item in gLocationLists)
                         {
-                            //strSQL = "INSERT INTO INV_TRAN ";
-                            //strSQL = strSQL + "(INV_TRAN_KEY,INV_TRAN_POSITION,BRANCH_ID,INV_REF_NO,INV_DATE,STOCKITEM_NAME,";
-                            //strSQL = strSQL + "INV_TRAN_QUANTITY,INV_TRAN_RATE,INV_TRAN_AMOUNT,";
-                            //strSQL = strSQL + "GODOWNS_NAME";
-                            ////if (strBatch != "")
-                            ////{
-                            ////    strSQL = strSQL + ",INV_LOG_NO";
-                            ////}
-                            //strSQL = strSQL + ") ";
-                            //strSQL = strSQL + "VALUES('" + strRefNo + lngloop + "'," + lngloop + ",";
-                            //strSQL = strSQL + "'" + strBranchID + "',";
-                            //strSQL = strSQL + "'" + strRefNo + "',";
-                            //strSQL = strSQL + " " + Utility.cvtSQLDateString(strdate) + ",";
-                            //strSQL = strSQL + "'" + vstrItemName + "',";
-                            //strSQL = strSQL + " " + item.intQty + ",";
-                            //strSQL = strSQL + " " + item.dblBranchRate + ",";
-                            //strSQL = strSQL + " " + item.dblBranchAmnout + ",";
-                            //strSQL = strSQL + "'Main Location'";
-                            //if (item.strBatch != null)
-                            //{
-                            //    strSQL = strSQL + ",'" + item.strBatch + "' ";
-                            //}
-                            //strSQL = strSQL + ") ";
-
-
-
+                           
                             strSQL = "INSERT INTO INV_TRAN ";
                             strSQL = strSQL + "(INV_TRAN_KEY,INV_TRAN_POSITION,BRANCH_ID,INV_REF_NO,INV_DATE,STOCKITEM_NAME,";
                             strSQL = strSQL + "INV_TRAN_QUANTITY,INV_TRAN_RATE,INV_TRAN_AMOUNT,GODOWNS_NAME";
-                            //strSQL = strSQL + "INV_VOUCHER_TYPE,INV_OPENING_FLAG ";
-                            //if (item.strBatch != null)
-                            //{
-                            //    strSQL = strSQL + ",INV_LOG_NO";
-                            //}
+                          
                             strSQL = strSQL + ") ";
                             strSQL = strSQL + "VALUES('" + strRefNo + lngloop.ToString().PadLeft(4,'0') + "',";
                             strSQL = strSQL + "" + lngloop + ",'0001',";
@@ -525,11 +491,7 @@ namespace AssetsManagment.Controllers
                             strSQL = strSQL + "'" + vstrItemName + "'," + item.intQty + ",";
                             strSQL = strSQL + " " + item.dblBranchRate + "," + item.dblBranchAmnout + ",";
                             strSQL = strSQL + "'" + item.strBranchName.Replace("'", "''") + "'";
-                            //strSQL = strSQL + 0 + ",1";
-                            //if (strBatch != "")
-                            //{
-                            //    strSQL = strSQL + ",'" + strBatch.Replace("'", "''") + "'";
-                            //}
+                         
                             strSQL = strSQL + ") ";
 
 

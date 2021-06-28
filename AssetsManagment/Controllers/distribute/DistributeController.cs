@@ -1,8 +1,11 @@
 ﻿using AssetsManagment.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace AssetsManagment.Controllers.distribute
@@ -16,59 +19,62 @@ namespace AssetsManagment.Controllers.distribute
             return View();
         }
 
+        string strSQL;
+
+        public JsonResult getGroupList(string strDeComID)
+        {
+
+            SqlDataReader drGetGroup;
+            List<Group> oogrp = new List<Group>();
+            StockGroup sp = new StockGroup();
+            Response response = new Response();
+
+            string connectionString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            strSQL = "SELECT STOCKGROUP_SERIAL, STOCKGROUP_NAME, STOCKGROUP_PARENT,STOCKGROUP_ONE_DOWN, STOCKGROUP_PRIMARY,STOCKGROUP_NAME_DEFAULT ,G_STATUS ";
+            strSQL = strSQL + "FROM INV_STOCKGROUP ORDER BY STOCKGROUP_NAME ASC ";
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
 
 
-        //public List<Location> LocationList()
-        //{
+                gcnMain.Open();
 
-        //    string strSQL;
-        //    SqlDataReader drGetGroup;
-        //    List<Location> oogrp = new List<Location>();
-        //    LocationResponse response = new LocationResponse();
-        //    string connectionString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
 
-        //    strSQL = "SELECT GODOWNS_SERIAL,GODOWNS_NAME,BRANCH_ID,GODOWNS_DEFAULT,GODOWNS_PHONE,GODOWNS_ADDRESS1 FROM INV_GODOWNS ";
+                drGetGroup = cmd.ExecuteReader();
+                while (drGetGroup.Read())
+                {
+                    Group ogrp = new Group();
+                    ogrp.SERIAL = Convert.ToInt64(drGetGroup["STOCKGROUP_SERIAL"].ToString());
+                    ogrp.NAME = drGetGroup["STOCKGROUP_NAME"].ToString();
+                    ogrp.PARENT = drGetGroup["STOCKGROUP_PARENT"].ToString();
+                    ogrp.PRIMARY = drGetGroup["STOCKGROUP_PRIMARY"].ToString();
+                    ogrp.G_STATUS = Convert.ToInt16(drGetGroup["G_STATUS"].ToString());
+                    if (drGetGroup["STOCKGROUP_ONE_DOWN"].ToString() != "")
+                    {
+                        ogrp.ONE_DOWN = drGetGroup["STOCKGROUP_ONE_DOWN"].ToString();
+                    }
+                    else
+                    {
+                        ogrp.ONE_DOWN = "";
+                    }
 
-        //    //if (searchTerm != null)
-        //    //{
-        //    //    strSQL = "SELECT GODOWNS_SERIAL,GODOWNS_NAME,BRANCH_ID,GODOWNS_DEFAULT,GODOWNS_PHONE,GODOWNS_ADDRESS1 FROM INV_GODOWNS WHERE GODOWNS_NAME=" + "'" + searchTerm + "'";
-        //    //}
-        //    using (SqlConnection gcnMain = new SqlConnection(connectionString))
-        //    {
-        //        if (gcnMain.State == ConnectionState.Open)
-        //        {
-        //            gcnMain.Close();
-        //        }
-        //        gcnMain.Open();
+                    oogrp.Add(ogrp);
 
-        //        SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
-        //        drGetGroup = cmd.ExecuteReader();
-        //        while (drGetGroup.Read())
-        //        {
-        //            Location ogrp = new Location();
-        //            ogrp.lngSlNo = Convert.ToInt64(drGetGroup["GODOWNS_SERIAL"].ToString());
-        //            ogrp.strLocation = drGetGroup["GODOWNS_NAME"].ToString();
-        //            ogrp.strPhone = drGetGroup["GODOWNS_PHONE"].ToString();
-        //            ogrp.strAddres1 = drGetGroup["GODOWNS_ADDRESS1"].ToString();
+                }
+                drGetGroup.Close();
+                gcnMain.Dispose();
+                //sp.data = oogrp;
 
-        //            if (drGetGroup["BRANCH_ID"].ToString() != "")
-        //            {
-        //                ogrp.strBranch = Utility.gstrGetBranchName("0001", drGetGroup["BRANCH_ID"].ToString());
-        //            }
-        //            else
-        //            {
-        //                ogrp.strBranch = "";
-        //            }
-        //            ogrp.lngDefault = Convert.ToInt32(drGetGroup["GODOWNS_DEFAULT"]);
-        //            oogrp.Add(ogrp);
-        //        }
-        //        drGetGroup.Close();
-        //        gcnMain.Dispose();
-        //        return oogrp;
-        //    }
 
-        //}
+                return Json(oogrp, JsonRequestBehavior.AllowGet);
+                //return sp;
 
+            }
+        }
 
 
 	}

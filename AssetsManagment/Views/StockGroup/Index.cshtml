@@ -291,7 +291,7 @@
     }
 
     function UpdateStockGroup(sl) {
-    alert(sl)
+   
         var empObj = {
 
             NAME: $('#StockGroupName').val(),
@@ -301,7 +301,7 @@
 
         
         };
-        alert(empObj)
+       
 
         $.ajax({
             url: "/StockGroup/Update",
@@ -400,19 +400,13 @@
                 console.log('hello delete dataddddddddd', data);
                 var s = '<option value="-1">Please Select a Under Group</option>';  
                 for (var i = 0; i < data.length; i++) {  
-                    s += '<option value="' + data[i].SERIAL + '">' + data[i].NAME + '</option>';
+                    s += '<option value="' + data[i].NAME + '">' + data[i].NAME + '</option>';
                 }  
                 $("#Under").html(s);
             }  ,
-            //success: function (data) {
-
-            //    alert(data);
-            //    //$('#menu2').html(data);
-            //    //Spiner.hide();
-            //},
+            
             error: function (ex) {
-                //alert(ex);
-                //Spiner.hide();
+               
             }
         });
     }
@@ -455,7 +449,7 @@
                     },
                 },
                 {
-                    title: 'SERIAL',
+                    title: 'ID',
                     data: 'SERIAL',
                     name: 'SERIAL',
                 },
@@ -527,7 +521,7 @@
                  .click(function () {
 
                      selectdata = data;
-                     console.log('hello delete dataddddddddd', selectdata);
+                     console.log('hello select data', selectdata);
                      //rerender();
                  });
                 $(row).find(".sales-sloat-ak").click(function () {

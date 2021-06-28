@@ -15,7 +15,19 @@
                 <h5 style="text-align: right;">Department</h5>
             </div>
             <div class="col-sm-7 " style="margin: 5px;">
-                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+                <select id="department" class="form-control" aria-describedby="basic-addon2"></select>
+                
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4" style="margin: 5px;">
+                <h5 style="text-align: right;">Group</h5>
+            </div>
+            <div class="col-sm-7 " style="margin: 5px;">
+                <select id="grouplist" class="form-control" aria-describedby="basic-addon2"></select>
+
 
             </div>
 
@@ -79,7 +91,58 @@
 
 <script>
 
-    GetLeaveIdlist = ["s", "a"];
+    $(document).ready(function () {
+        
+
+        getDepartmentList();
+
+        getGroupList();
+
+
+    });
+
+
+    function getDepartmentList() {
+
+        $.ajax({
+            url: '/Department/showGrid',
+            type: 'GET',
+            data: "{}",
+            success: function (data) {
+                console.log('hello delete dataddddddddd', data);
+                var s = '<option value="-1">Please Select a Department</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].department_code + '">' + data[i].department_name + '</option>';
+                }
+                $("#department").html(s);
+            },
+
+            error: function (ex) {
+
+            }
+        });
+    }
+
+    function getGroupList() {
+
+        $.ajax({
+            url: '/StockGroup/getUnderList',
+            type: 'GET',
+            data: "{}",
+            success: function (data) {
+                console.log('hello delete dataddddddddd', data);
+                var s = '<option value="-1">Please Select a Group</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].SERIAL + '">' + data[i].NAME + '</option>';
+                }
+                $("#grouplist").html(s);
+            },
+
+            error: function (ex) {
+
+            }
+        });
+    }
 
 
 </script>

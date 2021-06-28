@@ -112,10 +112,7 @@ namespace AssetsManagment.Controllers.setting
                 drGetGroup.Close();
                 gcnMain.Dispose();
                 //response.data = obList;
-
                 return Json(obList, JsonRequestBehavior.AllowGet);
-
-
             }
 
         }
