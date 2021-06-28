@@ -17,7 +17,7 @@ namespace AssetsManagment.Controllers
         string strSQL = null;
         //
         // GET: /StockGroup/
-        [HttpPost]
+    
         public ActionResult Index()
         {
         

@@ -774,10 +774,11 @@
                     dataType: "json",
                     success: function (result) {
                   
-                        if (result == "Ok") {
+                        alert(result);
+                        if (result == "OK") {
                             $('#myModal').modal('hide');
-                            //cleardatda();
-                            //showGrid();
+                            cleardatda();
+                            showGrid();
                         } else {
                             alert("resutl is ", result);
                         };
@@ -948,7 +949,7 @@
                         });
                         $(row).find(".delete-sloat-ak").click(function () {
                             selectdata = data;
-                            deletePack(selectdata.lngslNo)
+                            deleteItemsById(selectdata.lngSlNo)
                             //that.salesss(data);
                             //that.rerender();
                         });
@@ -1034,10 +1035,10 @@
 
             }
 
-            function deletePack(id) {
+            function deleteItemsById(id) {
 
                 $.ajax({
-                    url: "/StockGroup/DeleteG?id=" + id,
+                    url: "/Item/deleteItemById?id=" + id,
                     //data: JSON.stringify(empObj),
                     type: "POST",
                     contentType: "application/json;charset=utf-8",

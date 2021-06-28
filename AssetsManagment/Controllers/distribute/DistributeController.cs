@@ -39,7 +39,6 @@ namespace AssetsManagment.Controllers.distribute
                     gcnMain.Close();
                 }
 
-
                 gcnMain.Open();
 
                 SqlCommand cmd = new SqlCommand(strSQL, gcnMain);

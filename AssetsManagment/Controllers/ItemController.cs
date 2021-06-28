@@ -195,6 +195,56 @@ namespace AssetsManagment.Controllers
         }
 
 
+        public JsonResult getStockItemListByGroup(string group)
+        {
+
+            SqlDataReader drGetItems;
+            List<StockItem> oogrp = new List<StockItem>();
+            StockItemResponse sp = new StockItemResponse();
+            Response response = new Response();
+            string strSQL;
+
+
+            string connectionString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            strSQL = "SELECT STOCKITEM_SERIAL, STOCKITEM_NAME, STOCKGROUP_NAME, STOCKITEM_OPENING_BALANCE,STOCKITEM_STATUS ";
+            strSQL = strSQL + "FROM INV_STOCKITEM  ";
+            strSQL = strSQL + " where STOCKGROUP_NAME='" + group + "' ";
+             strSQL = strSQL + "ORDER BY STOCKITEM_NAME ASC";
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
+                gcnMain.Open();
+                SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
+                drGetItems = cmd.ExecuteReader();
+                while (drGetItems.Read())
+                {
+                    StockItem ogrp = new StockItem();
+                    ogrp.lngSlNo = Convert.ToInt64(drGetItems["STOCKITEM_SERIAL"].ToString());
+                    ogrp.strItemName = drGetItems["STOCKITEM_NAME"].ToString();
+                    ogrp.strItemGroup = drGetItems["STOCKGROUP_NAME"].ToString();
+                    //ogrp.strItemDescription = drGetItems["STOCKITEM_DESCRIPTION"].ToString();
+                    ogrp.dblOpnQty = Convert.ToDouble(drGetItems["STOCKITEM_OPENING_BALANCE"].ToString());
+                    ogrp.strStatus = drGetItems["STOCKITEM_STATUS"].ToString();
+                    
+
+                    oogrp.Add(ogrp);
+
+                }
+                drGetItems.Close();
+                gcnMain.Dispose();
+                //sp.data = oogrp;
+
+
+
+                return Json(oogrp, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
         public JsonResult locationListByItemId(string id)
         {
 
@@ -240,7 +290,7 @@ namespace AssetsManagment.Controllers
         
         }
 
-        public string updateData(StockItem resObje)
+        public JsonResult updateData(StockItem resObje)
         {
             StockItem objstok = new StockItem();
 
@@ -372,7 +422,7 @@ namespace AssetsManagment.Controllers
 
                         cmdInsert.Transaction.Commit();
                         gcnMain.Close();
-                        return "Ok";
+                        return Json("OK", JsonRequestBehavior.AllowGet);
 
 
                     }
@@ -386,21 +436,21 @@ namespace AssetsManagment.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return (ex.ToString());
+                    return Json(ex.ToString(), JsonRequestBehavior.AllowGet); 
                 }
                 finally
                 {
                     gcnMain.Close();
                 }
             }
-
-            return "Ok";
+            return Json("OK", JsonRequestBehavior.AllowGet);
+           
         }
 
 
 
 
-        public string saveDatad(StockItem resObje)
+        public JsonResult saveDatad(StockItem resObje)
         {
             StockItem objstok = new StockItem();
             //objstok.gLocationList.ToList();
@@ -453,7 +503,7 @@ namespace AssetsManagment.Controllers
                         strAlias = Utility.GetsItemCode("0003", "Finished Goods").ToString();
 
 
-                        strRefNo = Utility.vtSTOCK_OPENING_STR + "0001" + strItemSerial + "-OPN" + lngloop + strGodownSerial;
+                   
 
                     strSQL = "INSERT INTO INV_STOCKITEM";
                     strSQL = strSQL + "(STOCKITEM_NAME,STOCKITEM_ALIAS,STOCKITEM_DESCRIPTION,STOCKGROUP_NAME,";
@@ -479,7 +529,28 @@ namespace AssetsManagment.Controllers
 
                         foreach (var item in gLocationLists)
                         {
-                           
+
+                            strSQL = "SELECT GODOWNS_SERIAL,BRANCH_ID FROM INV_GODOWNS WHERE GODOWNs_NAME = 'Main Location' ";
+                            cmdInsert.CommandText = strSQL;
+                            dr = cmdInsert.ExecuteReader();
+                            if (dr.Read())
+                            {
+                                strGodownSerial = dr["GODOWNS_SERIAL"].ToString();
+                                strBranchID = dr["BRANCH_ID"].ToString();
+                            }
+                            dr.Close();
+                            strSQL = "SELECT max(INV_TRAN_SERIAL)+1 as STOCKITEM_SERIAL FROM INV_TRAN ";
+                            cmdInsert.CommandText = strSQL;
+                            dr = cmdInsert.ExecuteReader();
+                            if (dr.Read())
+                            {
+                                strItemSerial = dr["STOCKITEM_SERIAL"].ToString();
+                            }
+                            dr.Close();
+
+
+
+                            strRefNo = Utility.vtSTOCK_OPENING_STR + "0001" + strItemSerial + "-OPN" + lngloop + strGodownSerial;
                             strSQL = "INSERT INTO INV_TRAN ";
                             strSQL = strSQL + "(INV_TRAN_KEY,INV_TRAN_POSITION,BRANCH_ID,INV_REF_NO,INV_DATE,STOCKITEM_NAME,";
                             strSQL = strSQL + "INV_TRAN_QUANTITY,INV_TRAN_RATE,INV_TRAN_AMOUNT,GODOWNS_NAME";
@@ -511,11 +582,11 @@ namespace AssetsManagment.Controllers
 
                     cmdInsert.Transaction.Commit();
                     gcnMain.Close();
-                    return "Ok";
+                    return Json("OK", JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
-                    return (ex.ToString());
+                    return  Json(ex, JsonRequestBehavior.AllowGet);
                 }
                 finally
                 {
@@ -524,7 +595,7 @@ namespace AssetsManagment.Controllers
             }
 
 
-
+            //return Json("OK", JsonRequestBehavior.AllowGet);
 
         }
  
@@ -549,11 +620,6 @@ namespace AssetsManagment.Controllers
                 {
                     gcnMain.Close();
                 }
-
-
-
-
-
                 gcnMain.Open();
 
                 SqlCommand cmd = new SqlCommand(strSQL, gcnMain);
@@ -599,9 +665,53 @@ namespace AssetsManagment.Controllers
 
 
 
+        [HttpPost]
+        public ActionResult deleteItemById(int id)
+        {
+            string strSQL="";
+        
+            string connectionString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection gcnMain = new SqlConnection(connectionString))
+            {
+                if (gcnMain.State == ConnectionState.Open)
+                {
+                    gcnMain.Close();
+                }
+                try
+                {
+                    gcnMain.Open();
 
+                   
+                    SqlCommand cmdDelete = new SqlCommand();
+                    SqlTransaction myTrans;
+                    myTrans = gcnMain.BeginTransaction();
+                    cmdDelete.Connection = gcnMain;
+                    cmdDelete.Transaction = myTrans;
 
+                    strSQL = "DELETE FROM INV_STOCKITEM ";
+                    strSQL = strSQL + "WHERE STOCKITEM_SERIAL = " + id + "";
+                    cmdDelete.CommandText = strSQL;
+                    cmdDelete.ExecuteNonQuery();
+           
+                    cmdDelete.Transaction.Commit();
+                    gcnMain.Close();
+                  
+                    return Json("OK", JsonRequestBehavior.AllowGet);
+                }
 
+                catch (Exception ex)
+                {
+
+                    return Json("Error", JsonRequestBehavior.AllowGet);
+                }
+                finally
+                {
+                    gcnMain.Close();
+                }
+
+            }
+
+        }
         //
         // GET: /Item/Details/5
         public ActionResult Details(int id)

@@ -27,30 +27,37 @@
             </div>
             <div class="col-sm-7 " style="margin: 5px;">
                 <select id="grouplist" class="form-control" aria-describedby="basic-addon2"></select>
-
-
             </div>
 
         </div>
-
 
         <div class="row">
-            <label class="control-label col-md-4" style="margin: 5px;">Leave Category Drop</label>
-            <div class="col-md-7" style="margin: 5px;">
-                <div class="input-group">
-                    <select id="ddlCategory" class="form-control" aria-describedby="basic-addon2">
-                        <option value="">--Select One--</option>
-                        @*@foreach (var item in ViewBag.GetLeaveIdlist)
-                    {
-                        <option value="@item.LEAVE_ID">@item.LEAVE_ID</option>
-                    }*@
-                    </select>
-                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search" data-toggle="modal" data-target="#myModal"></i></span>
-                </div>
-
+            <div class="col-sm-4" style="margin: 5px;">
+                <h5 style="text-align: right;">Items</h5>
+            </div>
+            <div class="col-sm-7 " style="margin: 5px;">
+                <select id="itemslist" class="form-control" aria-describedby="basic-addon2"></select>
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="col-sm-4" style="margin: 5px;">
+                <h5 style="text-align: right;">Item Qty</h5>
+            </div>
+            <div class="col-sm-7 " style="margin: 5px;">
+                <input style="font-size: large; font-weight: bold;"
+                       type="text"
+                       id="itemqty"
+                       value=""
+                       class="form-control"
+                       required />
+            </div>
+
+        </div>
+
+
+        
 
 
 
@@ -133,9 +140,39 @@
                 console.log('hello delete dataddddddddd', data);
                 var s = '<option value="-1">Please Select a Group</option>';
                 for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].SERIAL + '">' + data[i].NAME + '</option>';
+                    s += '<option value="' + data[i].NAME + '">' + data[i].NAME + '</option>';
                 }
                 $("#grouplist").html(s);
+            },
+
+            error: function (ex) {
+
+            }
+        });
+    }
+
+    $('#grouplist').on("change", function () {
+        var group = $('#grouplist').val();
+        var obj = { group: group };
+        //alert(group);
+        getItemList(group);
+
+    });
+
+    function getItemList(group) {
+        alert(group);
+        $.ajax({
+      
+            url: "/Item/getStockItemListByGroup?group=" + group,
+            type: 'GET',
+            data: "{}",
+            success: function (data) {
+                console.log('hello delete dataddddddddd', data);
+                var s = '<option value="-1">Please Select a Group</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].strItemName + '">' + data[i].strItemName + '</option>';
+                }
+                $("#itemslist").html(s);
             },
 
             error: function (ex) {
