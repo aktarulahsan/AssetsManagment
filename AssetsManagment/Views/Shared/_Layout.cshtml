@@ -48,13 +48,14 @@
         <div class="bg-light border-right" id="sidebar-wrapper">
             <div class="sidebar-heading bg-default">Assets </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="~/StockGroup/Index">Setting</a>
+                @*<a class="list-group-item list-group-item-action bg-light" style="color:white;" href="~/StockGroup/Index">Setting</a>*@
                 @*<a class="list-group-item list-group-item-action bg-light" href="~/Category/Index">Category</a>*@
                
-                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="~/Distribute/Index">Distribute</a>
-                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Events</a>
-                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Profile</a>
-                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Status</a>
+                @*<a class="list-group-item list-group-item-action bg-light" style="color:white;" href="~/Distribute/Index">Distribute</a>*@
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Home</a>
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">About Us</a>
+              
+                <a class="list-group-item list-group-item-action bg-light" style="color:white;" href="#!">Contuct Us</a>
             </div>
         </div>
         <!-- Page Content-->
@@ -88,8 +89,8 @@
                             </a>
                             <ul class="dropdown-menu megamenu">
                                 <li class="nav-item">
-                                    <a [routerLink]="['/leave']" data-toggle="" class="nav-link">
-                                        Dashboard
+                                    <a href="~/StockGroup/Index" data-toggle="" class="nav-link">
+                                        Configration
                                     </a>
                                     <!---->
                                 </li>
@@ -98,9 +99,9 @@
                                         Operation
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a [routerLink]="['/leaveApplication']"
+                                        <a href="~/Distribute/Index"
                                            class="dropdown-item">
-                                            Leave Application
+                                            Issue
                                         </a><a class="dropdown-item">
                                             Visit Application
                                         </a><a class="dropdown-item">

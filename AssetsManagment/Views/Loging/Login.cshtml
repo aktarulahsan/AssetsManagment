@@ -14,7 +14,7 @@
 
         Body {
             font-family: Calibri, Helvetica, sans-serif;
-            background-color: green;
+            background-color: grey;
             height: 100%;
             background-image: url("https://cdn1.vectorstock.com/i/1000x1000/21/10/green-chalkboard-with-colorful-chalk-vector-20792110.jpg");
             /*background-position: center;*/
@@ -153,10 +153,10 @@ span.psw {
   
     </div>*@
 
-    @using (Html.BeginForm("Index", "StockGroup", new { }, FormMethod.Post, new { @class = "modal-content  ", role = "form" }))
-    {
-        
-     
+@using (Html.BeginForm("Index", "StockGroup", new { }, System.Web.Mvc.FormMethod.Post, new { @class = "modal-content  ", role = "form" }))
+{
+
+
          <div class="container">
                 <label for="uname"><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" required>

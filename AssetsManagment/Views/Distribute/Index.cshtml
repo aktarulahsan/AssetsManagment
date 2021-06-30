@@ -4,87 +4,113 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
+ 
 
 <div class="row" >
     <div class="col-lg-4">
-        <h1>input field</h1>
-        <div class="row">
-            <div class="col-sm-4" style="margin: 5px;">
-                <h5 style="text-align: right;">Department</h5>
-            </div>
-            <div class="col-sm-7 " style="margin: 5px;">
-                <select id="department" class="form-control" aria-describedby="basic-addon2"></select>
-                
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-4" style="margin: 5px;">
-                <h5 style="text-align: right;">Group</h5>
-            </div>
-            <div class="col-sm-7 " style="margin: 5px;">
-                <select id="grouplist" class="form-control" aria-describedby="basic-addon2"></select>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-sm-4" style="margin: 5px;">
-                <h5 style="text-align: right;">Items</h5>
-            </div>
-            <div class="col-sm-7 " style="margin: 5px;">
-                <select id="itemslist" class="form-control" aria-describedby="basic-addon2"></select>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-sm-4" style="margin: 5px;">
-                <h5 style="text-align: right;">Item Qty</h5>
-            </div>
-            <div class="col-sm-7 " style="margin: 5px;">
-                <input style="font-size: large; font-weight: bold;"
-                       type="text"
-                       id="itemqty"
-                       value=""
-                       class="form-control"
-                       required />
-            </div>
-
-        </div>
-
-
         
+        <form class="form-horizontal form-signin"
+            
+              novalidate
+              action="index.html">
 
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">date</h5>
+                </div>
 
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <input type="date" class="form-control" id="issueDate" name="issueDate">
 
-
-
-        <div class="row">
-            <div class="col-sm-4" style="margin: 5px;">
-                <h5 style="text-align: right;">Card No</h5>
+                </div>
             </div>
-            <div class="col-sm-7 " style="margin: 5px;">
-                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">Department</h5>
+                </div>
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <select id="department" class="form-control" aria-describedby="basic-addon2"></select>
+
+
+                </div>
 
             </div>
+            
+
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">Card No</h5>
+                </div>
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <input type="text" class="form-control" id="cardNo" placeholder="H-11883" />
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">Emp Name</h5>
+                </div>
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <input type="text" class="form-control" id="empName" placeholder="Name" />
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">Group</h5>
+                </div>
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <select id="grouplist" class="form-control" aria-describedby="basic-addon2"></select>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">Items</h5>
+                </div>
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <select id="itemslist" class="form-control" aria-describedby="basic-addon2"></select>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4" style="margin: 5px;">
+                    <h5 style="text-align: right;">Item Qty</h5>
+                </div>
+                <div class="col-sm-7 " style="margin: 5px;">
+                    <input style="font-size: large; font-weight: bold;"
+                           type="text"
+                           id="itemqty"
+                           value=""
+                           class="form-control"
+                           required />
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <span><input type="button" class="btn btn-primary" id="btnAddlocation" onclick="addOrEditDistribute();" value="Add"></input></span>
+                <span><input type="button" class="btn btn-warning" id="btnClearlocation" onclick="cleardatda();" value="Clear"></input></span>
+                @*<button type="submit" class="btn btn-dark"><i class="fa fa-plus"></i> Add to List</button>*@
+
+            </div>
+            <br>
+
+        </form>
+        <div>
+            <table id="itemsDatatable" class="table table-striped table-bordered" style="width:100%"></table>
+        </div>
+        <div class="modal-footer">
+            <span><input type="button" class="btn btn-primary" id="btnSaveData" onclick="saveOrEditDistribute();" value="Save"></input></span>
+            <span><input type="button" class="btn btn-warning" id="btnClearlocation" onclick="cleardatda();" value="Clear"></input></span>
+            @*<button type="submit" class="btn btn-dark"><i class="fa fa-plus"></i> Add to List</button>*@
 
         </div>
-        <div class="row">
-            <div class="col-sm-4" style="margin: 5px;">
-                <h5 style="text-align: right;">Item Name</h5>
-            </div>
-            <div class="col-sm-7 " style="margin: 5px;">
-                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
-
-            </div>
-
-        </div>
-
-
     </div>
     <div class="col-lg-8">
         <h1>Grid view</h1>
@@ -98,15 +124,169 @@
 
 <script>
 
-    $(document).ready(function () {
-        
+    var itemsList = [];
+    var issueDetailsList = [];
 
+    $(document).ready(function () {
+ 
         getDepartmentList();
 
         getGroupList();
 
 
     });
+
+
+    function addOrEditDistribute() {
+        btn = $('#btnAddlocation').val();
+        if (btn == "Add") {
+            addItems();
+        } if (btn == "Update") {
+            updateLocation();
+
+        }
+    }
+
+  
+
+
+
+    function addItems() {
+        
+
+        itemName = $('#itemslist').val();
+        itemQty = $('#itemqty').val();
+
+       
+        var result = false;
+        console.log("issueDetailsList issueDetailsList", issueDetailsList);
+        for (i = 0; i < issueDetailsList.length; i++) {
+            if (issueDetailsList[i].strItemName == itemName) {
+
+                result = true;
+
+            }
+        }
+        if (result === false) {
+            console.log("result", result);
+            issueDetailsList.push({
+                item_name: itemName,
+                item_qty: itemQty,
+            });
+            cleardatda();
+        } else {
+            alert("You Alrady Add This Location");
+            return
+        }
+
+        console.log(issueDetailsList);
+    
+        console.log(itemsList);
+        showlocationlview();
+
+    }
+    function showlocationlview() {
+        $('#itemsDatatable').DataTable({
+            data: issueDetailsList,
+            "bDestroy": true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "scrollX": true,
+            "select": true,
+            "dataSrc": function (response) {
+                // Settings.
+                response.draw = response.draw;
+                response.recordsTotal = response.recordsTotal;
+                response.recordsFiltered = response.recordsFiltered;
+                console.log('request.responseText', response);
+                return response;
+            },
+            columns: [
+
+                {
+                    title: 'SL',
+                    render: function (
+                        data,
+                        type,
+                        row,
+                       meta
+                    ) {
+                        return '<span>' + (meta.row + 1) + '</span>';
+                    },
+                },
+
+                    //{ title: 'Location Name', data: 'strLocation' },
+                    { title: 'Item Name', data: 'strItemName' },
+
+                    { title: 'Qty', data: 'dblItemQty', className: 'editable' },
+                    
+                     //{
+                     //    title: 'Edit',
+                     //    render: function (data, type, row) {
+                     //        return '<button type="button"   class="btn btn-info fontsize  sales-sloat-ak">Edit</button>';
+                     //    }
+                     //},
+                 {
+                     render: function (data, type, row) {
+                         return '<button class="btn btn-info fontsize  sales-sloat-ak">   <i class="fa fa-pencil"></i></button>' + "&nbsp" + '<button class="btn btn-danger fontsize  delete-sloat-ak"> <i class="fa fa-trash"></i></button>';
+                     }
+                 },
+                   
+            ],
+            //"scrollX": true,
+            "responsive": true,
+            "rowCallback": function (row, data) {
+                $(row)
+                 .bind('click')
+                 .click(function () {
+
+                     selectlocationItem = data;
+                     console.log('hello select data', selectlocationItem);
+                     //rerender();
+                 });
+                $(row).find(".sales-sloat-ak").click(function () {
+                    selectlocationItem = data;
+                    console.log('hello edit data', selectlocationItem);
+                    editLocation(selectlocationItem);
+                   
+                });
+                $(row).find(".delete-sloat-ak").click(function () {
+                    //selectlocationItem = data;
+                    deletData(data);
+                });
+
+            }
+        });
+    }
+
+    function deletData(data) {
+         
+        for (var i = 0; i < issueDetailsList.length; i++) {
+            if (issueDetailsList[i].strItemName == data.strItemName) { }
+            
+            issueDetailsList.splice(i, 1);
+        }
+
+        showlocationlview();
+
+    }
+
+    function cleardatda() {
+
+        $("#datatable2").dataTable().fnDestroy();
+        $('#btnAddlocation').val("Add");
+        $('#intRate').val("");
+        $('#intRate').val("");
+        $('#intQty').val("");
+    }
+
+
+
+
+
+
+
 
 
     function getDepartmentList() {
@@ -158,9 +338,9 @@
         getItemList(group);
 
     });
-
+  
     function getItemList(group) {
-        alert(group);
+         
         $.ajax({
       
             url: "/Item/getStockItemListByGroup?group=" + group,
@@ -170,7 +350,7 @@
                 console.log('hello delete dataddddddddd', data);
                 var s = '<option value="-1">Please Select a Group</option>';
                 for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].strItemName + '">' + data[i].strItemName + '</option>';
+                    s += '<option value="' + data[i] + '">' + data[i].strItemName + '</option>';
                 }
                 $("#itemslist").html(s);
             },
@@ -180,6 +360,74 @@
             }
         });
     }
+    $('#itemslist').on("change", function () {
+        var group = $('#itemslist').val();
+        var obj = { group: group };
+        alert(group + "" + obj.strItemcode);
+        getItemList(group);
+
+    });
+
+
+
+
+    function saveOrEditDistribute() {
+        btn = $('#btnSaveData').val();
+        if (btn == "Save") {
+            saveIssue();
+        } if (btn == "Update") {
+            //updateLocation();
+        }
+    }
+
+
+    function saveIssue() {
+
+        jQuery.ajaxSettings.traditional = true;
+        var list = [];
+        list = issueDetailsList;
+        console.log('list list', list);
+        var empObj = {
+            //strItemName: $('#strItemName').val(),
+
+            department_name: $('#department').val(),
+            card_no: $('#cardNo').val(),
+            emp_name: $('#empName').val(),
+
+            issue_date: $('#issueDate').val(),
+            //created_by: $('#strDate').val(),
+            //create_date: $('#issueDate').val(),
+            //updated_by: qtyTotal,
+            //update_date: dblOpnValues,
+
+            gIssueDetailsList: list,
+
+
+
+        };
+        console.log("sdfsfsdfsdf", empObj);
+
+        $.ajax({
+            url: "/Distribute/saveIssue",
+            type: "POST",
+            data: JSON.stringify(empObj),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                alert(result);
+                if (result == "OK") {
+                    $('#myModal').modal('hide');
+                    cleardatda();
+                    //showGrid();
+                } else {
+                    alert("resutl is ", result);
+                };
+
+            }
+        });
+    }
+
 
 
 </script>

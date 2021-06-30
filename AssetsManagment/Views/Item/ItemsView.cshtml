@@ -9,268 +9,271 @@
 @*// modal start*@ 
 
 
+ 
+
+
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" data-backdrop="static"  aria-labelledby="myLargeModalLabel exampleModalCenterTitle" aria-hidden="true" id="myModal">
+             
+                <div class="modal-dialog modal-lg bd-example-modal-lg ">
+                    <div class="modal-content">
+                        <div class="modal-header ">
 
-            <div class="modal-dialog modal-lg bd-example-modal-lg ">
-                <div class="modal-content">
-                    <div class="modal-header ">
-
-                        <h5 class="modal-title  text-center" style="margin: 0 auto;" id="exampleModalLabel"></h5>
-                        <p>  </p>
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                (click)="bsModalRef.hide()">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body crudForm">
-                        <div class="persoanlInfoArea">
-                            <div class="row">
-
-                                <div class="col-md-8">
-
-                                    <div class="row" style="display: none;">
-                                        <div class="col-sm-4" style="margin: 5px;">
-                                            <h5 style="text-align: right;">Order Date</h5>
-                                        </div>
-                                        <div class="col-sm-7 " style="margin: 5px;">
-                                            <input style="font-size: large; font-weight: bold;"
-                                                   type="text"
-                                                   id="strDate"
-                                                   value=""
-                                                   class="form-control"
-                                                   readonly />
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-4" style="margin: 5px;">
-                                            <h5 style="text-align: right;">Item Name</h5>
-                                        </div>
-                                        <div class="col-sm-7 " style="margin: 5px;">
-                                            <input type="text" class="form-control" id="ItemName" placeholder="Name" />
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-4" style="margin: 5px;">
-                                            <h5 style="text-align: right;">Item Description</h5>
-                                        </div>
-
-                                        <div class="col-sm-7 " style="margin: 5px;">
-
-                                            <textarea type="text"
-                                                      id="strItemDescription"
-                                                      placeholder="Type Item Description in Here"
-                                                      class="md-textarea md-textarea-auto form-control"
-                                                      name="strItemDescription"></textarea>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-4" style="margin: 5px;">
-                                            <h5 style="text-align: right;">Under</h5>
-                                        </div>
-                                        <div class="col-sm-7 " style="margin: 5px;">
-
-                                            <div>
-                                                <select id="groupList" class="form-control">
-                                                    <option value="">--Select One--</option>
-                                                    @foreach (var group in ViewBag.groupList)
-                                                    {
-                                                        <option value="@group.NAME">@group.NAME</option>
-                                                    }
-                                                </select>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-4" style="margin: 5px; ">
-                                            <h5 style="text-align: right;">Unit</h5>
-                                        </div>
-                                        <div class="col-sm-7 " style="margin: 5px;">
-                                            <input type="text" class="form-control" id="strUnit" placeholder="Unit" />
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-4" style="margin: 5px; ">
-                                            <h5 style="text-align: right;">Inactive</h5>
-                                        </div>
-                                        <div class="form-group col-sm-6 ">
-
-                                            <select class="form-control"
-                                                    id="status"
-                                                    name="catId">
-                                                <option>
-                                                    yes
-                                                </option>
-                                                <option>
-                                                    No
-                                                </option>
-                                            </select>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-4" style="padding: 15px;">
-                                    <div style="background-color: wheat; padding: 10px;">
-                                        <h1 style="text-align: center; color: green;">Total Qty</h1>
-                                        <input style="font-size: 52px; font-weight: bold; color: red;text-align: center; background-color: white;"
-                                               type="text"
-                                               id="qtyTotal"
-                                               class="form-control"
-                                               readonly />
-
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-
-                            </div>
-
-
+                            <h5 class="modal-title  text-center" style="margin: 0 auto;" id="exampleModalLabel"></h5>
+                            <p>  </p>
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    (click)="bsModalRef.hide()">
+                                <span>&times;</span>
+                            </button>
                         </div>
-                        @*<span><input type="button" class="btn btn-primary" id="btnAdds" onclick="return getData();" value="Add"></input></span>*@
 
                         <div class="modal-body crudForm">
                             <div class="persoanlInfoArea">
-                                <form class="form-horizontal form-signin"
-                                      (ngsubmit)="f.form.valid && onSaveOrUpdate(f)"
-                                      #f="ngForm"
-                                      novalidate
-                                      action="index.html">
+                                <div class="row">
 
-                                    <div class="row">
-                                        <div class="col-sm-4 form-group">
-                                            <label class="control-label">Location Name</label>
-                                            <div>
-                                                <select id="responsid2" class="form-control">
-                                                    <option value="">--Select One--</option>
-                                                    @foreach (var item in ViewBag.reslist)
-                                                    {
-                                                        <option value="@item.strLocation">@item.strLocation</option>
-                                                    }
-                                                </select>
+                                    <div class="col-md-8">
+
+                                        <div class="row" style="display: none;">
+                                            <div class="col-sm-4" style="margin: 5px;">
+                                                <h5 style="text-align: right;">Order Date</h5>
+                                            </div>
+                                            <div class="col-sm-7 " style="margin: 5px;">
+                                                <input style="font-size: large; font-weight: bold;"
+                                                       type="text"
+                                                       id="strDate"
+                                                       value=""
+                                                       class="form-control"
+                                                       readonly />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-4" style="margin: 5px;">
+                                                <h5 style="text-align: right;">Item Name</h5>
+                                            </div>
+                                            <div class="col-sm-7 " style="margin: 5px;">
+                                                <input type="text" class="form-control" id="ItemName" placeholder="Name" />
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-4" style="margin: 5px;">
+                                                <h5 style="text-align: right;">Item Description</h5>
+                                            </div>
+
+                                            <div class="col-sm-7 " style="margin: 5px;">
+
+                                                <textarea type="text"
+                                                          id="strItemDescription"
+                                                          placeholder="Type Item Description in Here"
+                                                          class="md-textarea md-textarea-auto form-control"
+                                                          name="strItemDescription"></textarea>
+
                                             </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-sm-4" style="margin: 5px;">
+                                                <h5 style="text-align: right;">Under</h5>
+                                            </div>
+                                            <div class="col-sm-7 " style="margin: 5px;">
 
+                                                <div>
+                                                    <select id="groupList" class="form-control">
+                                                        <option value="">--Select One--</option>
+                                                        @foreach (var group in ViewBag.groupList)
+                                                        {
+                                                            <option value="@group.NAME">@group.NAME</option>
+                                                        }
+                                                    </select>
+                                                </div>
 
-                                        <div class="form-group col-md-2 ">
-                                            <h5 for="productName">Quentity</h5>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   name="productName"
-                                                   onchange="calculateRate()"
-                                                   id="intQty" />
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <h5 for="qty">Rate</h5>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   name="intRate"
-                                                   onchange="calculateRate()"
-                                                   id="intRate" />
-
-                                        </div>
-
-                                        <div class="form-group col-md-2 ">
-                                            <h5 for="rate">Amount</h5>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   id="itemAmount" />
-
-                                        </div>
-                                        <div class="form-group col-md-2 ">
-                                            <h5 for="rate">Batch</h5>
-                                            <input type="number"
-                                                   class="form-control" />
+                                            </div>
 
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-sm-4" style="margin: 5px; ">
+                                                <h5 style="text-align: right;">Unit</h5>
+                                            </div>
+                                            <div class="col-sm-7 " style="margin: 5px;">
+                                                <input type="text" class="form-control" id="strUnit" placeholder="Unit" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-4" style="margin: 5px; ">
+                                                <h5 style="text-align: right;">Inactive</h5>
+                                            </div>
+                                            <div class="form-group col-sm-6 ">
+
+                                                <select class="form-control"
+                                                        id="status"
+                                                        name="catId">
+                                                    <option>
+                                                        yes
+                                                    </option>
+                                                    <option>
+                                                        No
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
 
                                     </div>
-                                    <br>
 
-                                    <div class="form-group">
-                                        <span><input type="button" class="btn btn-primary" id="btnAddlocation" onclick="addOrEditLocation();" value="Add"></input></span>
-                                        <span><input type="button" class="btn btn-warning" id="btnClearlocation" onclick="cleardatda();" value="Clear"></input></span>
-                                        @*<button type="submit" class="btn btn-dark"><i class="fa fa-plus"></i> Add to List</button>*@
+                                    <div class="col-md-4" style="padding: 15px;">
+                                        <div style="background-color: wheat; padding: 10px;">
+                                            <h1 style="text-align: center; color: green;">Total Qty</h1>
+                                            <input style="font-size: 52px; font-weight: bold; color: red;text-align: center; background-color: white;"
+                                                   type="text"
+                                                   id="qtyTotal"
+                                                   class="form-control"
+                                                   readonly />
+
+
+                                        </div>
 
                                     </div>
-                                    <br>
 
-                                </form>
-
-                                <div>
-                                    <table id="locationDatatable" class="table table-striped table-bordered" style="width:100%"></table>
                                 </div>
 
-                                @*<table class="table table-borderless">
-                                <thead class="thead-light">
-                                <th>SL</th>
-                                <th>Product Code</th>
-                                <th>Qty</th>
-                                <th>Unit Price</th>
-                                <th>Total</th>
-                                <th>Action</th>
+                                <div class="row">
 
-                                </thead>
-                                <tbody>
-                                    <tr *ngif="orderDetailList.length==0" [class.text-danger]="!isValid && orderDetailList.length==0">
-                                        <td class="font-italic text-center" colspan="5">
-                                            No item selected for this order.
-                                        </td>
-                                    </tr>
 
-                                    <tr *ngfor="let item of orderDetailList;let i=index;">
-                                        <td>{{i+1}}</td>
-                                        <td>{{item.l4Code}}</td>
-                                        <td>{{item.qty}}</td>
-                                        <td>{{item.rate}}</td>
-                                        <td>{{item.rate*item.qty}}</td>
+                                </div>
 
-                                        <td>
-                                            <a class="btn btn-sm btn-info text-white" (click)="editData(item,this)"><i class="fas fa-edit"></i></a>
-                                            <a class="btn btn-sm btn-danger text-white ml-1" (click)='deleteitem(i)'><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>*@
+
+                            </div>
+                            @*<span><input type="button" class="btn btn-primary" id="btnAdds" onclick="return getData();" value="Add"></input></span>*@
+
+                            <div class="modal-body crudForm">
+                                <div class="persoanlInfoArea">
+                                    <form class="form-horizontal form-signin"
+                                          (ngsubmit)="f.form.valid && onSaveOrUpdate(f)"
+                                          #f="ngForm"
+                                          novalidate
+                                          action="index.html">
+
+                                        <div class="row">
+                                            <div class="col-sm-4 form-group">
+                                                <label class="control-label">Location Name</label>
+                                                <div>
+                                                    <select id="responsid2" class="form-control">
+                                                        <option value="">--Select One--</option>
+                                                        @foreach (var item in ViewBag.reslist)
+                                                        {
+                                                            <option value="@item.strLocation">@item.strLocation</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group col-md-2 ">
+                                                <h5 for="productName">Quentity</h5>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       name="productName"
+                                                       onchange="calculateRate()"
+                                                       id="intQty" />
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <h5 for="qty">Rate</h5>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       name="intRate"
+                                                       onchange="calculateRate()"
+                                                       id="intRate" />
+
+                                            </div>
+
+                                            <div class="form-group col-md-2 ">
+                                                <h5 for="rate">Amount</h5>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       id="itemAmount" />
+
+                                            </div>
+                                            <div class="form-group col-md-2 ">
+                                                <h5 for="rate">Batch</h5>
+                                                <input type="number"
+                                                       class="form-control" />
+
+                                            </div>
+
+
+                                        </div>
+                                        <br>
+
+                                        <div class="form-group">
+                                            <span><input type="button" class="btn btn-primary" id="btnAddlocation" onclick="addOrEditLocation();" value="Add"></input></span>
+                                            <span><input type="button" class="btn btn-warning" id="btnClearlocation" onclick="cleardatda();" value="Clear"></input></span>
+                                            @*<button type="submit" class="btn btn-dark"><i class="fa fa-plus"></i> Add to List</button>*@
+
+                                        </div>
+                                        <br>
+
+                                    </form>
+
+                                    <div>
+                                        <table id="locationDatatable" class="table table-striped table-bordered" style="width:100%"></table>
+                                    </div>
+
+                                    @*<table class="table table-borderless">
+                                    <thead class="thead-light">
+                                    <th>SL</th>
+                                    <th>Product Code</th>
+                                    <th>Qty</th>
+                                    <th>Unit Price</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngif="orderDetailList.length==0" [class.text-danger]="!isValid && orderDetailList.length==0">
+                                            <td class="font-italic text-center" colspan="5">
+                                                No item selected for this order.
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngfor="let item of orderDetailList;let i=index;">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.l4Code}}</td>
+                                            <td>{{item.qty}}</td>
+                                            <td>{{item.rate}}</td>
+                                            <td>{{item.rate*item.qty}}</td>
+
+                                            <td>
+                                                <a class="btn btn-sm btn-info text-white" (click)="editData(item,this)"><i class="fas fa-edit"></i></a>
+                                                <a class="btn btn-sm btn-danger text-white ml-1" (click)='deleteitem(i)'><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>*@
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-outline-success " onclick="saveData()">Submit</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="bsModalRef.hide()">Cancel</button>
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-outline-success " onclick="saveData()">Submit</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="bsModalRef.hide()">Cancel</button>
-                        </div>
                     </div>
-
                 </div>
+
+
+
+
             </div>
-
-
-
-
-</div>
 
 
 
@@ -605,27 +608,9 @@
                     $("#responsid2").on("change", function () {
                         selectLocation = $(this).val();
 
-                        //var strCardNo = $(this).val();
+                 
                         console.log('params params params', selectLocation.lngSlNo, selectLocation);
-
-                        @*$.ajax({
-                            url: '@Url.Action("GetResponseDetails")',
-                            datatype: "json",
-                            data: {
-                                responseId: strCardNo
-                            },
-                            success: function (data) {
-                                if (data != null && data != "") {
-                                    $('#LeaveEntryModel_EmpName').val(data.EMP_NAME);
-                                    $('#LeaveEntryModel_MobileNo').val(data.EMP_ECONTRACT_MOBILE);
-                                }
-                                else {
-                                    $('#LeaveEntryModel_EmpName').val("");
-                                    $('#LeaveEntryModel_MobileNo').val("");
-
-                                }
-                            }
-                        })*@
+ 
                     });
 
 
@@ -634,27 +619,10 @@
                 $("#groupList").on("change", function () {
                     selectGroup = $(this).val();
 
-                    //var strCardNo = $(this).val();
+         
                     console.log('params params params',  selectGroup);
 
-                        @*$.ajax({
-                            url: '@Url.Action("GetResponseDetails")',
-                            datatype: "json",
-                            data: {
-                                responseId: strCardNo
-                            },
-                            success: function (data) {
-                                if (data != null && data != "") {
-                                    $('#LeaveEntryModel_EmpName').val(data.EMP_NAME);
-                                    $('#LeaveEntryModel_MobileNo').val(data.EMP_ECONTRACT_MOBILE);
-                                }
-                                else {
-                                    $('#LeaveEntryModel_EmpName').val("");
-                                    $('#LeaveEntryModel_MobileNo').val("");
-
-                                }
-                            }
-                        })*@
+                        
                         });
 
 
@@ -963,20 +931,6 @@
 
 
             function edit(selectdata) {
-
-                
-                //strItemName: $('#ItemName').val(),
-                //strItemGroup:selectGroup,
-                //strUnit: $('#strUnit').val(),
-                //strItemDescription: $('#strItemDescription').val(),
-                //strDate: $('#strDate').val(),
-                //strStatus: $('#status').val(),
-                //dblOpnQty: qtyTotal,
-                //dblOpnValue:dblOpnValues,
-                //dblOpnRate:dblOpnRates,
-                //gLocationList: list,
-
-                //alert("ok");
 
                 $('#myModal').modal('show');
 

@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\IssueMester.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Response.cs" />
@@ -583,6 +584,7 @@
     <Content Include="Views\Distribute\Index.cshtml" />
     <Content Include="Views\Department\departmentView.cshtml" />
     <Content Include="Views\Loging\Login.cshtml" />
+    <Content Include="Views\StockGroup\PartialStockGroupView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

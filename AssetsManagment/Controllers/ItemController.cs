@@ -461,10 +461,7 @@ namespace AssetsManagment.Controllers
             string vstrCatgory;
             objstok = resObje;
             List<GLocation> gLocationLists = resObje.gLocationList;
-
             string vstrAltUnit = objstok.strUnit;
-
-
 
             var a = resObje;
             string connectionString = WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -501,10 +498,6 @@ namespace AssetsManagment.Controllers
                     string strAlias = "";
            
                         strAlias = Utility.GetsItemCode("0003", "Finished Goods").ToString();
-
-
-                   
-
                     strSQL = "INSERT INTO INV_STOCKITEM";
                     strSQL = strSQL + "(STOCKITEM_NAME,STOCKITEM_ALIAS,STOCKITEM_DESCRIPTION,STOCKGROUP_NAME,";
                     strSQL = strSQL + "STOCKITEM_BASEUNITS,STOCKITEM_OPENING_BALANCE,STOCKITEM_OPENING_RATE,STOCKITEM_OPENING_VALUE,";
@@ -520,16 +513,11 @@ namespace AssetsManagment.Controllers
                     strSQL = strSQL + ",'" + objstok.dblOpnValue + "'";
                     strSQL = strSQL + ",'" + lngStockStatus + "'";
                     strSQL = strSQL + ")";
-                
-
                     cmdInsert.CommandText = strSQL;
                     cmdInsert.ExecuteNonQuery();
-
                     if (gLocationLists.Count > 0) {
-
                         foreach (var item in gLocationLists)
                         {
-
                             strSQL = "SELECT GODOWNS_SERIAL,BRANCH_ID FROM INV_GODOWNS WHERE GODOWNs_NAME = 'Main Location' ";
                             cmdInsert.CommandText = strSQL;
                             dr = cmdInsert.ExecuteReader();
@@ -641,14 +629,7 @@ namespace AssetsManagment.Controllers
                         ogrp.ONE_DOWN = "";
                     }
 
-                    //if (drGetGroup["STOCKGROUP_NAME_DEFAULT"].ToString() != "")
-                    //{
-                    //    ogrp.DEFAULT = drGetGroup["STOCKGROUP_NAME_DEFAULT"].ToString();
-                    //}
-                    //else
-                    //{
-                    //    ogrp.DEFAULT = "";
-                    //}
+                    
                     oogrp.Add(ogrp);
 
                 }

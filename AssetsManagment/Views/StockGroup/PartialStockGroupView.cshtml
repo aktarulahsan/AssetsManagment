@@ -1,0 +1,469 @@
+﻿<div><button type="button" class="btn btn-primary" data-toggle="modal" onclick="showem()" id="myBtn" data-target=".bd-example-modal-lg">Add </button></div>
+
+
+
+<div class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myLargeModalLabel exampleModalCenterTitle" aria-hidden="false" id="groupModal">
+
+    <div class="modal-dialog modal-lg bd-example-modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header ">
+
+                <h5 class="modal-title  text-center" style="margin: 0 auto;" id="exampleModalLabel"></h5>
+                <p>  </p>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                     >
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body crudForm">
+                <div class="col-md-12">
+                    <div>
+                        <div class="form-group">
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="EmployeeId">Name</label>
+                                        <input type="text" class="form-control" id="StockGroupName" placeholder="Name" />
+                                    </div>
+                                    <div class="form-group col-md-3 ">
+                                        <label for="Name">Under</label>
+                                        <select id="UnderG" class="form-control" aria-describedby="basic-addon2"></select>
+
+
+                                    </div>
+
+                                    <div class="form-group col-md-3 ">
+                                        <label for="EmployeeId">Status</label>
+                                        <select id="gStatus" class="form-control" aria-describedby="basic-addon2">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer justify-content-center">
+
+                                    <span><input type="button" class="btn btn-primary" id="btnStockAdds" onclick="saveOrUpdate()" value="Save"></input></span>
+                                    @*<span><input type="button" class="btn btn-primary" id="btnAdds" onclick="return cleardatda();" value="Clear"></input></span>*@
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            @*data-dismiss="modal"
+                                            aria-label="Close"
+                                            aria-hidden="false"*@
+                                           
+                                            onclick="Close()">
+                                        <span>Cancel</span>
+                                    </button>
+                                  
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<div class="border border-primary">
+    <table id="datatableStockGroup" class="table table-striped table-bordered" style="width:100%"></table>
+</div>
+@*<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>*@
+
+<script>
+    var title = "test Item";
+
+
+
+
+    function showem() {
+        //alert("odk")
+        $('#groupModal').modal('show');
+    }
+
+    
+    function Close() {
+        //$('.nav-tabs a[href="#menu5"]').tab('show');
+        //alert("odk")
+        visibility: hidden;
+        //$('#groupModal').modal('hide');
+        
+     
+        
+        //$('#groupModal').modal({ backdrop: 'non static', keyboard: false })
+        //location.reload();
+        //$.ajax({
+        //    url: '/Item/Index',
+        //    type: 'GET',
+        //    //data: { StudentIdC: studentIdC },
+        //    dataType: 'html',
+        //    contentType: 'application/json',
+        //    success: function (data) {
+        //        $('#menu3').html(data);
+
+        //        //Spiner.hide();
+        //    },
+        //    error: function (ex) {
+        //        //alert(ex);
+        //        //Spiner.hide();
+        //    }
+        //});
+
+        ////showGrid();
+    }
+
+
+    document.getElementById("exampleModalLabel").innerHTML = title;
+
+
+
+
+    $(document).ready(function () {
+        getUnderList();
+        showGrid();
+ 
+    });
+
+
+    var selectdata = "";
+    function saveOrUpdatecencel() {
+        //alert("dds")
+        $.ajax({
+            url: '/Item/Index',
+            type: 'GET',
+            //data: { StudentIdC: studentIdC },
+            dataType: 'html',
+            contentType: 'application/json',
+            success: function (data) {
+                $('#menu3').html(data);
+
+                //Spiner.hide();
+            },
+            error: function (ex) {
+                //alert(ex);
+                //Spiner.hide();
+            }
+        });
+    }
+
+    function saveOrUpdate() {
+
+        var btn = $('#btnStockAdds').val()
+
+
+        if (btn == "Save") {
+            saveStockGroup();
+
+
+            $.ajax({
+                url: '/Item/Index',
+                type: 'GET',
+                //data: { StudentIdC: studentIdC },
+                dataType: 'html',
+                contentType: 'application/json',
+                success: function (data) {
+                    $('#menu3').html(data);
+                    //Spiner.hide();
+                },
+                error: function (ex) {
+                    //alert(ex);
+                    //Spiner.hide();
+                }
+            });
+
+        } else {
+
+            UpdateStockGroup(selectdata.SERIAL);
+        }
+    }
+
+    function saveStockGroup() {
+
+        var empObj = {
+            NAME: $('#StockGroupName').val(),
+            PARENT: $('#UnderG').val(),
+            G_STATUS: $('#gStatus').val(),
+
+        };
+
+        $.ajax({
+            url: "/StockGroup/Create",
+            data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result == "Ok") {
+                    $('#groupModal').modal('hide');
+                    cleardatda();
+                    showGrid();
+                };
+
+            }
+        });
+
+    }
+
+    function UpdateStockGroup(sl) {
+
+        var empObj = {
+
+            NAME: $('#StockGroupName').val(),
+            PARENT: $('#UnderG').val(),
+            G_STATUS: $('#gStatus').val(),
+            SERIAL: selectdata.SERIAL,
+
+
+        };
+
+
+        $.ajax({
+            url: "/StockGroup/Update",
+            data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //alert(result)
+                //loadData();
+                //$('#myModal').modal('hide');
+                if (result == "Ok") {
+                    $('#groupModal').modal('hide');
+                    cleardatda();
+                    showGrid();
+
+                    //alert("save data")
+                    //$('.nav-tabs a[href="#tabLeaveApplicationList"]').tab('show');
+
+
+                };
+                //error: function (errormessage) {
+                //    alert(errormessage.responseText);
+                //}
+
+            }
+        });
+
+    }
+
+ 
+    function showGrid() {
+        $('#datatableStockGroup').DataTable({
+            "bDestroy": true,
+            "processing": true,
+            "orderMulti": false, // for disable multiple column at once  
+            "scrollX": true,
+
+            "deferRender": true,
+            "ajax": {
+                "url": "/StockGroup/GetLeaveEditkey",
+                "type": "POST",
+                "datatype": "json",
+                "dataSrc": function (response) {
+                    // Settings.
+                    response.draw = response.data.draw;
+                    response.recordsTotal = response.recordsTotal;
+                    response.recordsFiltered = response.recordsFiltered;
+                    console.log('request.responseText', response.data);
+                    return response.data;
+                }
+            },
+
+
+            "order": [[0, 'asc']],
+            "columns": [
+                {
+                    title: 'SL',
+                    render: function (
+                        data,
+                        type,
+                        row,
+                       meta
+                    ) {
+                        return '<span>' + (meta.row + 1) + '</span>';
+                    },
+                },
+                {
+                    title: 'ID',
+                    data: 'SERIAL',
+                    name: 'SERIAL',
+                },
+
+                 {
+                     title: 'Name',
+                     data: 'NAME',
+                     name: 'NAME',
+                 },
+
+                  {
+                      title: 'Parent',
+                      data: 'PARENT',
+                      name: 'PARENT',
+                  },
+                  {
+                      title: 'Status',
+                      data: 'G_STATUS',
+
+                      render: function (data) {
+                          return data == 1 ? "Active" : "Inactive"
+                      }
+                  },
+
+                  //{
+                  //    data: null,
+                  //    className: "dt-center editor-edit",
+                  //    defaultContent: '<i class="fa fa-pencil"/>',
+                  //    orderable: false
+                  //},
+                  //{
+                  //    data: null,
+                  //    className: "dt-center editor-delete",
+                  //    defaultContent: '<i class="fa fa-trash"/>',
+                  //    orderable: false
+                  //},
+
+                   {
+                       render: function (data, type, row) {
+                           return '<button class="btn btn-info fontsize  sales-sloat-ak">   <i class="fa fa-pencil"></i></button>' + "&nbsp" + '<button class="btn btn-danger fontsize  delete-sloat-ak"> <i class="fa fa-trash"></i></button>';
+                       }
+                   },
+
+                     //{
+                     //    render: function (data, type, row) {
+                     //        return '<button class="btnPrintAllResult gotoResultEntry btn btn-success"><i class="fa fa-trash"></i> </button>';
+                     //    }
+                     //},
+
+
+
+            ],
+
+
+            "responsive": false,
+            "select": true,
+            "rowCallback": function (row, data) {
+
+
+                //$(row)
+                //  .find('.booked-sloat')
+                //  .click(function () {
+                //      console.log('hello delete data', data);
+                //      //rerender();
+                //  });
+
+                $(row)
+                 .bind('click')
+                 .click(function () {
+
+                     selectdata = data;
+                     console.log('hello select data', selectdata);
+                     //rerender();
+                 });
+                $(row).find(".sales-sloat-ak").click(function () {
+                    selectdata = data;
+                    edit(selectdata);
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+                $(row).find(".delete-sloat-ak").click(function () {
+                    selectdata = data;
+                    deletef(selectdata.SERIAL)
+                    //that.salesss(data);
+                    //that.rerender();
+                });
+
+            }
+
+        });
+    }
+    function getUnderList() {
+
+        $.ajax({
+            url: '/StockGroup/getUnderList',
+            type: 'GET',
+            data: "{}",
+            success: function (data) {
+                console.log('hello delete dataddddddddd', data);
+                var s = '<option value="-1">Please Select a Under Group</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].NAME + '">' + data[i].NAME + '</option>';
+                }
+                $("#UnderG").html(s);
+            },
+
+            error: function (ex) {
+
+            }
+        });
+    }
+
+    function deletef(id) {
+         
+
+        $.ajax({
+            url: "/StockGroup/DeleteG?id=" + id,
+            //data: JSON.stringify(empObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                alert(result)
+                //loadData();
+                //$('#myModal').modal('hide');
+                if (result == "OK") {
+
+                    cleardatda();
+                    showGrid();
+
+                    //alert("save data")
+                    //$('.nav-tabs a[href="#tabLeaveApplicationList"]').tab('show');
+
+
+                };
+                //error: function (errormessage) {
+                //    alert(errormessage.responseText);
+                //}
+
+            }
+        });
+
+
+    }
+
+    function edit(selectdata) {
+        //alert(selectdata.NAME)
+
+        $('#groupModal').modal('show');
+        $('#StockGroupName').val(selectdata.NAME);
+        $('#UnderG').val(selectdata.PARENT);
+        $('#gStatus').val(selectdata.G_STATUS);
+        //$('#ddlCategory').val(selectdata.G_STATUS);
+        $('#btnStockAdds').val("Update");
+
+    }
+
+    function cleardatda() {
+
+        $("#datatable").dataTable().fnDestroy();
+        $('#StockGroupName').val("");
+        $('#UnderG').val("");
+        $('#gStatus').val("");
+        $('#btnStockAdds').val("Save");
+
+    }
+
+</script>

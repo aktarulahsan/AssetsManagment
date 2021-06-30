@@ -25,6 +25,14 @@ namespace AssetsManagment.Controllers
             return View();
         }
 
+          public ActionResult SGview()
+        {
+
+
+            return PartialView("PartialStockGroupView");
+        }
+
+        
 
 
         [HttpPost]
